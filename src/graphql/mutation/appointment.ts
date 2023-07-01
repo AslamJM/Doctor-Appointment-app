@@ -1,6 +1,6 @@
-import {gql} from '@apollo/client';
+import {gql} from '../../__generated__';
 
-export const CREATE_APPOINTMENT = gql`
+export const CREATE_APPOINTMENT = gql(`
   mutation CreateAppointment($appointmentInput: AppointmentInput!) {
     createAppointment(appointmentInput: $appointmentInput) {
       appointment {
@@ -9,9 +9,9 @@ export const CREATE_APPOINTMENT = gql`
       }
     }
   }
-`;
+`);
 
-export const UPDATE_APPOINTMENT = gql`
+export const UPDATE_APPOINTMENT = gql(`
   mutation UpdateAppointment(
     $updateAppointmentId: ID!
     $updateAppointmentInput: UpdateAppointmentInput!
@@ -24,4 +24,4 @@ export const UPDATE_APPOINTMENT = gql`
       success
     }
   }
-`;
+`);

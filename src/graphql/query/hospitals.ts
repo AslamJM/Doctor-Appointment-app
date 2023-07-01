@@ -1,6 +1,6 @@
-import {gql} from '@apollo/client';
+import {gql} from '../../__generated__';
 
-export const GET_HOSPITALS = gql`
+export const GET_HOSPITALS = gql(`
   query GetHospitals {
     getHospitals {
       id
@@ -9,9 +9,9 @@ export const GET_HOSPITALS = gql`
       image
     }
   }
-`;
+`);
 
-export const GET_HOSPITAL = gql`
+export const GET_HOSPITAL = gql(`
   query GetHospital($getHospitalId: ID!) {
     getHospital(id: $getHospitalId) {
       address
@@ -29,4 +29,4 @@ export const GET_HOSPITAL = gql`
       openTime
     }
   }
-`;
+`);

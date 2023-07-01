@@ -1,6 +1,6 @@
-import {gql} from '@apollo/client';
+import {gql} from '../../__generated__';
 
-export const GET_SPECIALITIES = gql`
+export const GET_SPECIALITIES = gql(`
   query GetSpecialities {
     getSpecialities {
       id
@@ -8,4 +8,4 @@ export const GET_SPECIALITIES = gql`
       image
     }
   }
-`;
+`);

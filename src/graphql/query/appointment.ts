@@ -1,6 +1,6 @@
-import {gql} from '@apollo/client';
+import {gql} from '../../__generated__';
 
-export const GET_APPOINTMENTS = gql`
+export const GET_APPOINTMENTS = gql(`
   query GetAppointments {
     getAppointments {
       id
@@ -13,4 +13,4 @@ export const GET_APPOINTMENTS = gql`
       time
     }
   }
-`;
+`);

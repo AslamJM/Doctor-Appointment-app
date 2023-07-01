@@ -1,6 +1,6 @@
-import {gql} from '@apollo/client';
+import {gql} from '../../__generated__';
 
-export const GET_SPECIALISTS = gql`
+export const GET_SPECIALISTS = gql(`
   query Query($specialityId: String!) {
     getSpecialists(specialityId: $specialityId) {
       name
@@ -10,9 +10,9 @@ export const GET_SPECIALISTS = gql`
       id
     }
   }
-`;
+`);
 
-export const GET_DOCTOR_BY_ID = gql`
+export const GET_DOCTOR_BY_ID = gql(`
   query Query($getDoctorId: ID!) {
     getDoctor(id: $getDoctorId) {
       address
@@ -41,9 +41,9 @@ export const GET_DOCTOR_BY_ID = gql`
       }
     }
   }
-`;
+`);
 
-export const GET_DOCTOR_AVAILABILTY = gql`
+export const GET_DOCTOR_AVAILABILTY = gql(`
   query Query($getDoctorId: ID!) {
     getDoctor(id: $getDoctorId) {
       availability {
@@ -62,4 +62,4 @@ export const GET_DOCTOR_AVAILABILTY = gql`
       }
     }
   }
-`;
+`);
