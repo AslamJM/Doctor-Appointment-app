@@ -1,4 +1,4 @@
-import {StyleSheet, Image, View, Text} from 'react-native';
+import {StyleSheet, Image, Text, ScrollView} from 'react-native';
 import React from 'react';
 import HospitalPageCard from '../../components/cards/HospitalPageCard';
 import {Divider, Box, Flex, Button, Badge} from 'native-base';
@@ -18,7 +18,7 @@ const facilitiesList = [
 
 const HospitalScreen = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <HospitalPageCard
         name="Sidda Medicine Hospital"
         address="Sidda Medicine Hospital, Sidda road , siddaleba"
@@ -39,7 +39,7 @@ const HospitalScreen = () => {
             </Badge>
           ))}
         </Flex>
-        <Flex direction="row" justifyContent="center">
+        <Flex direction="row" justifyContent="center" my={3}>
           <Button
             mr={2}
             variant="outline"
@@ -59,7 +59,7 @@ const HospitalScreen = () => {
           </Button>
         </Flex>
       </Box>
-    </View>
+    </ScrollView>
   );
 };
 

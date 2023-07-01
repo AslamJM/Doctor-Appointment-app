@@ -1,9 +1,10 @@
-import {StyleSheet, Text, View, Image, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {Button, Flex} from 'native-base';
 import React, {useState} from 'react';
-import Icons from '../../constants/Icons';
 import Fonts, {sizes} from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
+
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 const morningSlots = [
   '8:00',
@@ -23,11 +24,22 @@ interface SlotSectionProps {
 const SlotSection = ({type}: SlotSectionProps) => {
   const [selectedSlot, setSelectedSlot] = useState('');
 
+  const iconGenerate = () => {
+    switch (type) {
+      case 'Morning':
+        return <FeatherIcon name="sunrise" color={Colors.primary} size={30} />;
+      case 'Evening':
+        return <FeatherIcon name="sun" color={Colors.primary} size={30} />;
+      case 'Night':
+        return <FeatherIcon name="sunset" color={Colors.primary} size={30} />;
+    }
+  };
+
   const header = () => {
     return (
       <View style={styles.container}>
         <Flex direction="row" alignItems="center">
-          <Image source={Icons.WelcomeIcon} style={styles.icon} />
+          {iconGenerate()}
           <Text style={styles.title}>{type} Slots</Text>
         </Flex>
       </View>

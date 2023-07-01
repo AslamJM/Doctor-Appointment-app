@@ -1,11 +1,11 @@
 import React from 'react';
 import Providers from './src/components/Providers';
-import SpecialistScreen from './src/screens/doctor/SpecialistScreen';
+import BottomTabNavigator from './src/navigation/BottomTabsNavigation';
 
 const App = () => {
   return (
     <Providers>
-      <SpecialistScreen />
+      <BottomTabNavigator />
     </Providers>
   );
 };

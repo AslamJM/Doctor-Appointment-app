@@ -14,7 +14,10 @@ const BottomTabs = createBottomTabNavigator<BottomTabParamList>();
 
 const BottomTabNavigator = () => {
   return (
-    <BottomTabs.Navigator tabBar={props => <BottomTabBar {...props} />}>
+    <BottomTabs.Navigator
+      // eslint-disable-next-line react/no-unstable-nested-components
+      tabBar={props => <BottomTabBar {...props} />}
+      screenOptions={{headerShown: false}}>
       <BottomTabs.Screen name="Main" component={HomeStackNavigator} />
       <BottomTabs.Screen name="Appointments" component={AppointmentTabs} />
       <BottomTabs.Screen name="Messages" component={Chats} />
