@@ -1,9 +1,10 @@
-import {StyleSheet, Text, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, Image} from 'react-native';
 import React from 'react';
-import {Box, Flex} from 'native-base';
+import {Box, Button, Flex} from 'native-base';
 import Icons from '../../constants/Icons';
 import Fonts, {sizes} from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 interface HospitalCardProps {
   name: string;
@@ -14,7 +15,7 @@ interface HospitalCardProps {
 
 const HospitalCard = ({name, address, image, onPress}: HospitalCardProps) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
+    <Box style={styles.card}>
       <Flex direction="row">
         <Box style={styles.imageContainer}>
           <Image
@@ -25,9 +26,23 @@ const HospitalCard = ({name, address, image, onPress}: HospitalCardProps) => {
         <Box style={styles.contentContainer}>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.address}>{address}</Text>
+          <Flex direction="row" justifyContent="center" mt={2}>
+            <Button variant="outline" mr={2} borderColor={Colors.amber}>
+              <Text style={styles.btnText}>Call Now</Text>
+            </Button>
+            <Button
+              onPress={onPress}
+              ml={2}
+              borderColor={Colors.primary}
+              backgroundColor={Colors.primary}>
+              <Text style={[{...styles.btnText, color: Colors.white}]}>
+                Details <Entypo name="chevron-right" color={Colors.white} />
+              </Text>
+            </Button>
+          </Flex>
         </Box>
       </Flex>
-    </TouchableOpacity>
+    </Box>
   );
 };
 
@@ -59,5 +74,8 @@ const styles = StyleSheet.create({
   },
   address: {
     ...Fonts.light,
+  },
+  btnText: {
+    ...Fonts.regular,
   },
 });

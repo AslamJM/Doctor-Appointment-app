@@ -1,10 +1,15 @@
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList, Text} from 'react-native';
 import React from 'react';
 import SectionTitle from '../../components/text/SectionTitle';
 import SpecialityCard from '../../components/cards/SpecialityCard';
 import HospitalCard from '../../components/cards/HospitalCard';
 
 import {HomeStackScreenProps} from '../../navigation/types';
+import ChooseCity from '../../components/cards/ChooseCity';
+import {Button} from 'native-base';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Colors from '../../constants/Colors';
+import Fonts, {sizes} from '../../constants/Fonts';
 
 const dataArray = [
   {id: '1', name: 'Cardiology', image: 'https://via.placeholder.com/300'},
@@ -39,6 +44,7 @@ const hospitalArray = [
 const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
   return (
     <View style={styles.container}>
+      <ChooseCity />
       <View style={styles.specialityBox}>
         <SectionTitle>Find doctor by speciality</SectionTitle>
         <FlatList
@@ -60,6 +66,15 @@ const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
           )}
         />
       </View>
+      <Button
+        variant="ghost"
+        width={150}
+        onPress={() => navigation.navigate('AllSpecialities')}>
+        <Text style={styles.viewall}>
+          View All{' '}
+          <Entypo name="chevron-right" color={Colors.primary} size={16} />
+        </Text>
+      </Button>
       <View style={styles.scroll}>
         <SectionTitle>Hospitals near you</SectionTitle>
         <FlatList
@@ -93,6 +108,10 @@ const styles = StyleSheet.create({
   },
   scroll: {
     paddingHorizontal: 10,
-    paddingBottom: 70,
+  },
+  viewall: {
+    ...Fonts.bold,
+    color: Colors.primary,
+    fontSize: sizes.body3,
   },
 });

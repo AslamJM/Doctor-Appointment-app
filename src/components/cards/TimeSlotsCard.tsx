@@ -11,6 +11,7 @@ interface DoctorCardProps {
   experience: number;
   id: string;
   image?: string;
+  onClick: () => void;
 }
 
 const TimeSlotCard = ({
@@ -19,6 +20,7 @@ const TimeSlotCard = ({
   experience,
   id,
   image,
+  onClick,
 }: DoctorCardProps) => {
   return (
     <Flex direction="row" style={styles.card}>
@@ -31,7 +33,7 @@ const TimeSlotCard = ({
         <Text style={styles.experience}>{experience} years of experience</Text>
       </Flex>
       <Center>
-        <Button variant="ghost">
+        <Button variant="ghost" onPress={onClick}>
           <Text style={styles.buttonText}>Profile</Text>
         </Button>
       </Center>

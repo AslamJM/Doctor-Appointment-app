@@ -5,14 +5,17 @@ import {NativeBaseProvider} from 'native-base';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Colors from '../constants/Colors';
 import {NavigationContainer} from '@react-navigation/native';
+import AppProvider from '../context/GlobalContext';
 
 const Providers = ({children}: PropsWithChildren) => {
   return (
     <SafeAreaProvider>
       <NativeBaseProvider>
-        <NavigationContainer>
-          <View style={styles.container}>{children}</View>
-        </NavigationContainer>
+        <AppProvider>
+          <NavigationContainer>
+            <View style={styles.container}>{children}</View>
+          </NavigationContainer>
+        </AppProvider>
       </NativeBaseProvider>
     </SafeAreaProvider>
   );

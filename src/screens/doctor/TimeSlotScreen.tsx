@@ -3,8 +3,13 @@ import React from 'react';
 import TimeSlotCard from '../../components/cards/TimeSlotsCard';
 import SlotSection from '../../components/cards/SlotSection';
 import Calender from '../../components/doctor/Calender';
+import {HomeStackScreenProps} from '../../navigation/types';
 
-const TimeSlotScreen = () => {
+const TimeSlotScreen = ({
+  navigation,
+  route,
+}: HomeStackScreenProps<'TimeSlot'>) => {
+  const {doctorId} = route.params;
   return (
     <ScrollView style={styles.container}>
       <TimeSlotCard
@@ -12,6 +17,7 @@ const TimeSlotScreen = () => {
         speciality="Murivu Vaithiyam"
         experience={12}
         id="12345"
+        onClick={() => navigation.navigate('DoctorProfile', {doctorId})}
       />
       <Calender />
       <SlotSection type="Morning" />

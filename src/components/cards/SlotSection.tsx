@@ -1,8 +1,9 @@
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {Button, Flex} from 'native-base';
-import React, {useState} from 'react';
+import React from 'react';
 import Fonts, {sizes} from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
+import {useAppContext} from '../../context/GlobalContext';
 
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
@@ -22,7 +23,7 @@ interface SlotSectionProps {
 }
 
 const SlotSection = ({type}: SlotSectionProps) => {
-  const [selectedSlot, setSelectedSlot] = useState('');
+  const {selectedSlot, setSelectedSlot} = useAppContext();
 
   const iconGenerate = () => {
     switch (type) {

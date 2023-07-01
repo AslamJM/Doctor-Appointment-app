@@ -7,6 +7,7 @@ import type {
 
 export type HomeStackParamList = {
   Home: undefined;
+  AllSpecialities: undefined;
   Specialists: {
     specialityId: string;
   };

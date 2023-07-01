@@ -1,7 +1,7 @@
 import {StyleSheet, View, FlatList} from 'react-native';
 import React from 'react';
 import DoctorCard from '../../components/cards/DoctorCard';
-
+import SearchBar from '../../components/SearchBar';
 import {HomeStackScreenProps} from '../../navigation/types';
 
 const dataArray = [
@@ -82,6 +82,7 @@ const SpecialistScreen = ({
 }: HomeStackScreenProps<'Specialists'>) => {
   return (
     <View style={styles.container}>
+      <SearchBar />
       <FlatList
         data={dataArray}
         keyExtractor={item => `${item.name}`}
