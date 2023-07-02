@@ -4,6 +4,7 @@ import type {
   // CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
+import {MaterialTopTabScreenProps} from '@react-navigation/material-top-tabs';
 
 export type HomeStackParamList = {
   Home: undefined;
@@ -36,3 +37,14 @@ export type BottomTabParamList = {
 
 export type RootBottomTabScreenProps<Screen extends keyof BottomTabParamList> =
   BottomTabScreenProps<BottomTabParamList, Screen>;
+
+// Appointment Tabs
+
+export type AppointTabParams = {
+  Pending: undefined;
+  Cancelled: undefined;
+  Completed: undefined;
+};
+
+export type AppointmentTabScreenProps<Screen extends keyof AppointTabParams> =
+  MaterialTopTabScreenProps<AppointTabParams, Screen>;

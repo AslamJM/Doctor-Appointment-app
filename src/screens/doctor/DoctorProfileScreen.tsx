@@ -4,7 +4,7 @@ import {Box, Flex} from 'native-base';
 import Icons from '../../constants/Icons';
 import Colors from '../../constants/Colors';
 import Text from '../../components/text/Text';
-import Paragraph from '../../components/text/Paragraph';
+import SectionTitle from '../../components/text/SectionTitle';
 
 const DoctorProfileScreen = () => {
   return (
@@ -23,11 +23,12 @@ const DoctorProfileScreen = () => {
           </Text>
         </Box>
       </Flex>
-      <Paragraph>
+      <Text h4>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
         laudantium animi aut delectus, facilis soluta dolor quas facere cum
         velit?
-      </Paragraph>
+      </Text>
+      <SectionTitle>Reviews</SectionTitle>
     </View>
   );
 };

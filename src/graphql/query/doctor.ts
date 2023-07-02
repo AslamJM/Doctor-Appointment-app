@@ -1,19 +1,22 @@
 import {gql} from '../../__generated__';
 
 export const GET_SPECIALISTS = gql(`
-  query Query($specialityId: String!) {
+  query GetSpecialists($specialityId: String!) {
     getSpecialists(specialityId: $specialityId) {
       name
       image
       rating
       experience
       id
+      speciality {
+        name
+      }
     }
   }
 `);
 
 export const GET_DOCTOR_BY_ID = gql(`
-  query Query($getDoctorId: ID!) {
+  query GetDoctor($getDoctorId: ID!) {
     getDoctor(id: $getDoctorId) {
       address
       availability {
@@ -44,7 +47,7 @@ export const GET_DOCTOR_BY_ID = gql(`
 `);
 
 export const GET_DOCTOR_AVAILABILTY = gql(`
-  query Query($getDoctorId: ID!) {
+  query GetDoctorAvailablity($getDoctorId: ID!) {
     getDoctor(id: $getDoctorId) {
       availability {
         evening {

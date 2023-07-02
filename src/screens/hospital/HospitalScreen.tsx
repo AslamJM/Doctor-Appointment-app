@@ -1,12 +1,12 @@
-import {StyleSheet, Image, Text, ScrollView} from 'react-native';
+import {StyleSheet, Text, ScrollView} from 'react-native';
 import React from 'react';
 import HospitalPageCard from '../../components/cards/HospitalPageCard';
 import {Divider, Box, Flex, Button, Badge} from 'native-base';
 import SectionTitle from '../../components/text/SectionTitle';
 import Paragraph from '../../components/text/Paragraph';
-import Icons from '../../constants/Icons';
 import Fonts, {sizes} from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
+import MapView, {Marker} from 'react-native-maps';
 
 const facilitiesList = [
   'Parking available',
@@ -28,8 +28,21 @@ const HospitalScreen = () => {
       <Box px={5}>
         <SectionTitle>Address</SectionTitle>
         <Paragraph>Sidda Medicine Hospital, Sidda road , siddaleba</Paragraph>
-        <Box overflow="hidden">
-          <Image source={Icons.HospitalImage} style={styles.mapView} />
+        <Box overflow="hidden" borderRadius={8} shadow="1">
+          <MapView
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{height: 270.0}}
+            initialRegion={{
+              latitude: 37.33233141,
+              longitude: -122.0312186,
+              latitudeDelta: 0.1,
+              longitudeDelta: 0.1,
+            }}>
+            <Marker
+              coordinate={{latitude: 37.33233141, longitude: -122.0312186}}
+              pinColor={Colors.primary}
+            />
+          </MapView>
         </Box>
         <SectionTitle>Facilities</SectionTitle>
         <Flex direction="row" wrap="wrap" mb={2}>

@@ -4,102 +4,71 @@ import DoctorCard from '../../components/cards/DoctorCard';
 import SearchBar from '../../components/SearchBar';
 import {HomeStackScreenProps} from '../../navigation/types';
 
-const dataArray = [
-  {
-    id: 1,
-    name: 'Cardiology',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-  {
-    id: 2,
-    name: 'Dentistry',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-  {
-    id: 3,
-    name: 'Orthopedics',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-  {
-    id: 4,
-    name: 'Neurology',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-  {
-    id: 5,
-    name: 'Pediatrics',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-  {
-    id: 6,
-    name: 'Ophthalmology',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-  {
-    id: 7,
-    name: 'Gastroenterology',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-  {
-    id: 8,
-    name: 'Dermatology',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-  {
-    id: 9,
-    name: 'Endocrinology',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-  {
-    id: 10,
-    name: 'Oncology',
-    image: 'https://via.placeholder.com/300',
-    nameD: 'aslamjm',
-    exp: 10,
-  },
-];
+import {useQuery} from '@apollo/client';
+import {GET_SPECIALISTS} from '../../graphql/query/doctor';
+import ErrorComponent from '../../components/ErrorComponent';
+import {DoctorsLoading} from '../../components/skeletons/Loading';
 
 const SpecialistScreen = ({
   navigation,
+  route,
 }: HomeStackScreenProps<'Specialists'>) => {
+  const {specialityId} = route.params;
+  const {loading, error, data} = useQuery(GET_SPECIALISTS, {
+    variables: {
+      specialityId,
+    },
+  });
+
+  const renderSpecialists = () => {
+    if (loading) {
+      return <DoctorsLoading />;
+    }
+    if (error) {
+      return <ErrorComponent error={error} />;
+    }
+    if (!loading && (!data || !data.getSpecialists)) {
+      return (
+        <ErrorComponent error="an unknown error occurred. checkout later" />
+      );
+    }
+    const renderData = data!.getSpecialists!;
+    return (
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={renderData}
+        keyExtractor={item => {
+          if (!item) {
+            return Math.random().toString();
+          }
+          return item.id;
+        }}
+        renderItem={({item}) => {
+          if (!item) {
+            return null;
+          }
+          return (
+            <DoctorCard
+              name={item.name}
+              image={item.image!}
+              id={item.id}
+              experience={item.experience}
+              speciality={item.speciality.name}
+              onPress={() =>
+                navigation.navigate('Specialists', {specialityId: item.id})
+              }
+            />
+          );
+        }}
+      />
+    );
+  };
+
   return (
     <View style={styles.container}>
       <SearchBar />
-      <FlatList
-        data={dataArray}
-        keyExtractor={item => `${item.name}`}
-        // renderItem={loading ? skelitonItem : renderItem}
-        renderItem={({item}) => (
-          <DoctorCard
-            name={item.nameD}
-            image={item.image}
-            speciality={item.name}
-            experience={item.exp}
-            id={item.id.toString()}
-            onPress={() =>
-              navigation.navigate('TimeSlot', {doctorId: item.id.toString()})
-            }
-          />
-        )}
-      />
+      {renderSpecialists()}
     </View>
   );
 };

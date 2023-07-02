@@ -3,17 +3,36 @@ import React from 'react';
 import {Box, Flex, Circle} from 'native-base';
 import Colors from '../../constants/Colors';
 import Fonts, {sizes} from '../../constants/Fonts';
+import dayjs from 'dayjs';
 
-const AppointmentCard = () => {
+type Props = {
+  status: 'PENDING' | 'COMPLETED' | 'CANCELLED';
+  doctor: string;
+  speciality: string;
+  time: string;
+};
+
+const getbgColor = (status: 'PENDING' | 'COMPLETED' | 'CANCELLED') => {
+  switch (status) {
+    case 'PENDING':
+      return Colors.amber;
+    case 'CANCELLED':
+      return Colors.red;
+    case 'COMPLETED':
+      return Colors.primary;
+  }
+};
+
+const AppointmentCard = ({status, time, doctor, speciality}: Props) => {
   return (
     <Flex direction="row" style={styles.container}>
-      <Circle style={styles.circle}>
-        <Text style={styles.date}>15 oct 2022</Text>
+      <Circle style={[{...styles.circle, backgroundColor: getbgColor(status)}]}>
+        <Text style={styles.date}>{dayjs(time).format('DD MMM YYYY')}</Text>
       </Circle>
       <Box style={styles.content}>
-        <Text style={styles.time}>10.00 A.M</Text>
-        <Text style={styles.name}>Dr.kattakunju</Text>
-        <Text style={styles.field}>boobalogy</Text>
+        <Text style={styles.time}>{dayjs(time).format('HH:MM A')}</Text>
+        <Text style={styles.name}>{doctor}</Text>
+        <Text style={styles.field}>{speciality}</Text>
       </Box>
     </Flex>
   );
@@ -26,9 +45,10 @@ const styles = StyleSheet.create({
     height: 120,
     backgroundColor: Colors.white,
     padding: 8,
+    marginVertical: 5,
+    borderRadius: 8,
   },
   circle: {
-    backgroundColor: Colors.amber,
     flex: 1,
     aspectRatio: 1,
     padding: 5,

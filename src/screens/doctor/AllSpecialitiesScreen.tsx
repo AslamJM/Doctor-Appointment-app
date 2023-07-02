@@ -4,45 +4,59 @@ import SearchBar from '../../components/SearchBar';
 import SpecialityCardHorizontal from '../../components/cards/SpecialityCardHorizontal';
 import {HomeStackScreenProps} from '../../navigation/types';
 
-const dataArray = [
-  {id: '1', name: 'Cardiology', image: 'https://via.placeholder.com/300'},
-  {id: ' 2', name: 'Dentistry', image: 'https://via.placeholder.com/300'},
-  {id: ' 3', name: 'Orthopedics', image: 'https://via.placeholder.com/300'},
-  {id: ' 4', name: 'Neurology', image: 'https://via.placeholder.com/300'},
-  {id: ' 5', name: 'Pediatrics', image: 'https://via.placeholder.com/300'},
-  {id: ' 6', name: 'Ophthalmology', image: 'https://via.placeholder.com/300'},
-  {
-    id: ' 7',
-    name: 'Gastroenterology',
-    image: 'https://via.placeholder.com/300',
-  },
-  {id: ' 8', name: 'Dermatology', image: 'https://via.placeholder.com/300'},
-  {id: ' 9', name: 'Endocrinology', image: 'https://via.placeholder.com/300'},
-  {id: '10', name: 'Oncology', image: 'https://via.placeholder.com/300'},
-];
+import {useQuery} from '@apollo/client';
+import {GET_SPECIALITIES} from '../../graphql/query/speciality';
+import {SpecialityLoadingVertical} from '../../components/skeletons/Loading';
+import ErrorComponent from '../../components/ErrorComponent';
 
 const AllSpecialitiesScreen = ({
   navigation,
 }: HomeStackScreenProps<'AllSpecialities'>) => {
+  const {loading, data, error} = useQuery(GET_SPECIALITIES);
+  const renderSpecialities = () => {
+    if (loading) {
+      return <SpecialityLoadingVertical />;
+    }
+    if (error) {
+      return <ErrorComponent error={error} />;
+    }
+    if (!loading && (!data || !data.getSpecialities)) {
+      return (
+        <ErrorComponent error="an unknown error occurred. checkout later" />
+      );
+    }
+    const renderData = data!.getSpecialities!;
+    return (
+      <FlatList
+        data={renderData}
+        keyExtractor={item => {
+          if (!item) {
+            return Math.random().toString();
+          }
+          return item.id;
+        }}
+        renderItem={({item}) => {
+          if (!item) {
+            return null;
+          }
+          return (
+            <SpecialityCardHorizontal
+              name={item.name}
+              image={item.image}
+              id={item.id}
+              onPress={() =>
+                navigation.navigate('Specialists', {specialityId: item.id})
+              }
+            />
+          );
+        }}
+      />
+    );
+  };
   return (
     <View style={styles.container}>
       <SearchBar />
-      <FlatList
-        // data={loading ? Array.from([1, 2, 3, 4], i => ({id: i})) : fields}
-        data={dataArray}
-        keyExtractor={item => `k-${item.id}`}
-        // renderItem={loading ? skelitonItem : renderItem}
-        renderItem={({item}) => (
-          <SpecialityCardHorizontal
-            name={item.name}
-            image={item.image}
-            id={item.id}
-            onPress={() =>
-              navigation.navigate('Specialists', {specialityId: item.id})
-            }
-          />
-        )}
-      />
+      {renderSpecialities()}
     </View>
   );
 };
