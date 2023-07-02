@@ -6,58 +6,39 @@ import PendingScreen from '../screens/appointment/PendingScreen';
 import CompletedScreen from '../screens/appointment/CompletedScreen';
 import CancelledScreen from '../screens/appointment/CancelledScreen';
 
-import {Appointment} from '../__generated__/graphql';
+import {GetAppointmentsQuery} from '../__generated__/graphql';
+import {useQuery} from '@apollo/client';
+import {GET_APPOINTMENTS} from '../graphql/query/appointment';
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
+import ErrorComponent from '../components/ErrorComponent';
 
 const AppointmentTabs = createMaterialTopTabNavigator<AppointTabParams>();
 
-type ContextType = {
-  id: string;
-  doctor: string;
-  speciality: string;
-  time: string;
-  status: string;
-  user: string;
-};
+type GetAppointments = Pick<
+  GetAppointmentsQuery,
+  'getAppointments'
+>['getAppointments'];
 
-const AppointmentContext = React.createContext<{appointments: ContextType[]}>({
+const AppointmentContext = React.createContext<{
+  appointments: GetAppointments;
+}>({
   appointments: [],
 });
 
 export const useAppointmentContext = () => React.useContext(AppointmentContext);
 
 const AppointmentTabsNavigator = () => {
-  const arrayOfObjects = [
-    {
-      id: 'b161ab6d-2c4f-4b3c-a9d9-9a1f51ee9823',
-      doctor: 'Dr. Smith',
-      speciality: 'Cardiology',
-      time: '2023-06-26T10:30:00.000Z',
-      status: 'COMPLETED',
-      user: '111',
-    },
-    {
-      id: 'e249a147-4969-480d-b946-1175c38365a3',
-      doctor: 'Dr. Johnson',
-      speciality: 'Dentistry',
-      time: '2023-06-26T14:45:00.000Z',
-      status: 'CANCELLED',
-      user: '111',
-    },
-    {
-      id: '80cfc4ef-8657-4e81-b0f3-c84b46d33d8d',
-      doctor: 'Dr. Williams',
-      speciality: 'Orthopedics',
-      time: '2023-06-26T09:15:00.000Z',
-      status: 'PENDING',
-      user: '111',
-    },
-    // Add more objects as needed
-  ];
+  const {data, error, loading} = useQuery(GET_APPOINTMENTS);
+
+  if (error) {
+    return <ErrorComponent error={error} />;
+  }
+
+  const appointments = data?.getAppointments;
 
   return (
-    <AppointmentContext.Provider value={{appointments: arrayOfObjects}}>
+    <AppointmentContext.Provider value={{appointments: appointments!}}>
       <AppointmentTabs.Navigator>
         <AppointmentTabs.Screen
           name="Pending"

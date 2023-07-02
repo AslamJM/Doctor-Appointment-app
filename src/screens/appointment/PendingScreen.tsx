@@ -16,8 +16,8 @@ const PendingScreen = () => {
         keyExtractor={item => item.id}
         renderItem={({item}) => (
           <AppointmentCard
-            doctor={item.doctor}
-            speciality={item.speciality}
+            doctor={item.doctor.name}
+            speciality={item.doctor.speciality.name}
             status="PENDING"
             time={item.time}
           />

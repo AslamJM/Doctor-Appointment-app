@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation CreateAppointment($appointmentInput: AppointmentInput!) {\n    createAppointment(appointmentInput: $appointmentInput) {\n      appointment {\n        status\n        time\n      }\n    }\n  }\n": types.CreateAppointmentDocument,
     "\n  mutation UpdateAppointment(\n    $updateAppointmentId: ID!\n    $updateAppointmentInput: UpdateAppointmentInput!\n  ) {\n    updateAppointment(\n      id: $updateAppointmentId\n      updateAppointmentInput: $updateAppointmentInput\n    ) {\n      message\n      success\n    }\n  }\n": types.UpdateAppointmentDocument,
-    "\n  query GetAppointments {\n    getAppointments {\n      id\n      doctor {\n        name\n        speciality {\n          name\n        }\n      }\n      time\n    }\n  }\n": types.GetAppointmentsDocument,
+    "\n  query GetAppointments {\n    getAppointments {\n      id\n      status\n      doctor {\n        name\n        speciality {\n          name\n        }\n      }\n      time\n    }\n  }\n": types.GetAppointmentsDocument,
     "\n  query GetSpecialists($specialityId: String!) {\n    getSpecialists(specialityId: $specialityId) {\n      name\n      image\n      rating\n      experience\n      id\n      speciality {\n        name\n      }\n    }\n  }\n": types.GetSpecialistsDocument,
     "\n  query GetDoctor($getDoctorId: ID!) {\n    getDoctor(id: $getDoctorId) {\n      address\n      availability {\n        evening {\n          endTime\n          startTime\n        }\n        morning {\n          endTime\n          startTime\n        }\n        night {\n          endTime\n          startTime\n        }\n      }\n      description\n      experience\n      id\n      image\n      name\n      rating\n      speciality {\n        name\n      }\n    }\n  }\n": types.GetDoctorDocument,
     "\n  query GetDoctorAvailablity($getDoctorId: ID!) {\n    getDoctor(id: $getDoctorId) {\n      availability {\n        evening {\n          endTime\n          startTime\n        }\n        morning {\n          endTime\n          startTime\n        }\n        night {\n          endTime\n          startTime\n        }\n      }\n    }\n  }\n": types.GetDoctorAvailablityDocument,
@@ -49,7 +49,7 @@ export function gql(source: "\n  mutation UpdateAppointment(\n    $updateAppoint
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetAppointments {\n    getAppointments {\n      id\n      doctor {\n        name\n        speciality {\n          name\n        }\n      }\n      time\n    }\n  }\n"): (typeof documents)["\n  query GetAppointments {\n    getAppointments {\n      id\n      doctor {\n        name\n        speciality {\n          name\n        }\n      }\n      time\n    }\n  }\n"];
+export function gql(source: "\n  query GetAppointments {\n    getAppointments {\n      id\n      status\n      doctor {\n        name\n        speciality {\n          name\n        }\n      }\n      time\n    }\n  }\n"): (typeof documents)["\n  query GetAppointments {\n    getAppointments {\n      id\n      status\n      doctor {\n        name\n        speciality {\n          name\n        }\n      }\n      time\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

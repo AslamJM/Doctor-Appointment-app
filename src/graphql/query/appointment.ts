@@ -4,6 +4,7 @@ export const GET_APPOINTMENTS = gql(`
   query GetAppointments {
     getAppointments {
       id
+      status
       doctor {
         name
         speciality {

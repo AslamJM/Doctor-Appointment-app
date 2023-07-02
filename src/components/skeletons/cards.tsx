@@ -42,10 +42,15 @@ const SlotSkeleton = () => {
   return <Skeleton width="100" />;
 };
 
+const MapSkeleton = () => {
+  return <Skeleton h="270" rounded="md" startColor={Colors.primary} />;
+};
+
 export {
   SpecialitySkeleton,
   HospitalSkeleton,
   DoctorSkeleton,
   SlotSkeleton,
   SpecialitySkeletonVertical,
+  MapSkeleton,
 };
