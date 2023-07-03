@@ -48,3 +48,16 @@ export type AppointTabParams = {
 
 export type AppointmentTabScreenProps<Screen extends keyof AppointTabParams> =
   MaterialTopTabScreenProps<AppointTabParams, Screen>;
+
+// Auth navigation
+
+export type AuthStackParams = {
+  SignUp: undefined;
+  SignIn: undefined;
+  VerifyEmail: {
+    type: 'SignIn' | 'SignUp';
+  };
+};
+
+export type AuthStackScreenProps<Screen extends keyof AuthStackParams> =
+  StackScreenProps<AuthStackParams, Screen>;

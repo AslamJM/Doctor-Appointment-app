@@ -19,7 +19,7 @@ import ErrorComponent from '../../components/ErrorComponent';
 import {
   SpecialtyLoading,
   HospitalLoading,
-} from '../../components/skeletons/Loading
+} from '../../components/skeletons/Loading';
 
 const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
   const {loading, data, error} = useQuery(GET_SPECIALITIES);
