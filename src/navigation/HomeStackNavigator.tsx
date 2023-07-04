@@ -9,6 +9,7 @@ import HospitalScreen from '../screens/hospital/HospitalScreen';
 import AllSpecialitiesScreen from '../screens/doctor/AllSpecialitiesScreen';
 import DoctorProfileScreen from '../screens/doctor/DoctorProfileScreen';
 import AppointmentScreen from '../screens/doctor/Appointment';
+import PatientListScreen from '../screens/patient/PatientListScreen';
 
 const HomeStack = createStackNavigator<HomeStackParamList>();
 
@@ -29,6 +30,7 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen name="Hospital" component={HospitalScreen} />
       <HomeStack.Screen name="DoctorProfile" component={DoctorProfileScreen} />
       <HomeStack.Screen name="Appointment" component={AppointmentScreen} />
+      <HomeStack.Screen name="PatientList" component={PatientListScreen} />
     </HomeStack.Navigator>
   );
 };
