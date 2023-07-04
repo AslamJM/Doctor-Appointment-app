@@ -29,14 +29,14 @@ export const getTimeSlots = (startTime: string, endTime: string) => {
 export function convertTimeToISOString(timeString: string) {
   const currentDate = dayjs();
   const [hours, minutes] = timeString
-    .split('.')
+    .split(':')
     .map(part => parseInt(part, 10));
 
   let hours24 = hours;
   if (hours === 12) {
     hours24 = 0;
   }
-  if (timeString.endsWith('P.M.')) {
+  if (timeString.endsWith('PM')) {
     hours24 += 12;
   }
 

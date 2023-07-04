@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import React, {createContext, useReducer, useContext} from 'react';
 
 // Define the state shape
@@ -6,12 +7,15 @@ interface AppState {
   setCity: (value: string) => void;
   selectedSlot: string;
   setSelectedSlot: (value: string) => void;
+  selectedDate: string;
+  setSelectedDate: (value: string) => void;
 }
 
 // Define the action types
 type Action =
   | {type: 'SET_CITY'; payload: string}
-  | {type: 'SET_SLOT'; payload: string};
+  | {type: 'SET_SLOT'; payload: string}
+  | {type: 'SET_DATE'; payload: string};
 
 // Define the initial state
 const initialState: AppState = {
@@ -23,6 +27,8 @@ const initialState: AppState = {
   setSelectedSlot: () => {
     //
   },
+  selectedDate: dayjs().toISOString(),
+  setSelectedDate: () => {},
 };
 
 // Define the reducer function
@@ -32,6 +38,8 @@ const appReducer = (state: AppState, action: Action): AppState => {
       return {...state, city: action.payload};
     case 'SET_SLOT':
       return {...state, selectedSlot: action.payload};
+    case 'SET_DATE':
+      return {...state, selectedDate: action.payload};
     default:
       return state;
   }
@@ -52,11 +60,16 @@ const AppProvider: React.FC<{children: React.ReactNode}> = ({children}) => {
     dispatch({type: 'SET_SLOT', payload: value});
   };
 
+  const setSelectedDate = (value: string) => {
+    dispatch({type: 'SET_DATE', payload: value});
+  };
+
   // Define the context value
   const contextValue = {
     ...state,
     setCity,
     setSelectedSlot,
+    setSelectedDate,
   };
 
   return (

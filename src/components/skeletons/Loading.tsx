@@ -88,7 +88,7 @@ const SlotsLoading = ({type}: SlotSectionProps) => {
     <FlatList
       ListHeaderComponent={<>{header()}</>}
       data={Array.from([1, 2, 3, 4, 6, 7, 8], i => ({id: i}))}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={item => `${type}-${item.id}`}
       renderItem={() => <SlotSkeleton />}
       scrollEnabled={false}
       numColumns={3}

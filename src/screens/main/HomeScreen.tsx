@@ -109,7 +109,7 @@ const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
               address={item.address}
               image={item.image}
               onPress={() =>
-                navigation.navigate('Hospital', {hospitalId: item.name})
+                navigation.navigate('Hospital', {hospitalId: item.id})
               }
             />
           );

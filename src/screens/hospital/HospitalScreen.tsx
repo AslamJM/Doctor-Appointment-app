@@ -27,6 +27,7 @@ const HospitalScreen = ({route}: HomeStackScreenProps<'Hospital'>) => {
         name
         address
         image
+        openTime
       }
     `,
   })!;
@@ -93,7 +94,7 @@ const HospitalScreen = ({route}: HomeStackScreenProps<'Hospital'>) => {
       <HospitalPageCard
         name={hospital.name}
         address={hospital.address}
-        timing="9.00 A.M to 4.00 P.M"
+        timing={hospital.openTime}
       />
       <Divider />
       <Box px={5}>

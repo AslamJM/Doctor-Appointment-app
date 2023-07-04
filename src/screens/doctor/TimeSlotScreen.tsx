@@ -11,8 +11,11 @@ import {Doctor} from '../../__generated__/graphql';
 import ErrorComponent from '../../components/ErrorComponent';
 import {SlotsLoading} from '../../components/skeletons/Loading';
 import SlotSectionHeader from '../../components/doctor/SlotSectionHeader';
-import {Center} from 'native-base';
+import {Button, Center, ArrowForwardIcon, HStack} from 'native-base';
 import Text from '../../components/text/Text';
+
+import {useAppContext} from '../../context/GlobalContext';
+import Colors from '../../constants/Colors';
 
 const TimeSlotScreen = ({
   navigation,
@@ -20,6 +23,8 @@ const TimeSlotScreen = ({
 }: HomeStackScreenProps<'TimeSlot'>) => {
   const {doctorId} = route.params;
   const client = useApolloClient();
+
+  const {selectedSlot} = useAppContext();
 
   // get Doctor data from the cache
   const doctor = client.readFragment<Doctor>({
@@ -61,18 +66,26 @@ const TimeSlotScreen = ({
 
     const notAvailableMessage = () => (
       <Center py={2}>
-        <Text h3>Doctor is not available</Text>
+        <Text h3 style={{color: Colors.red}}>
+          Doctor is not available
+        </Text>
       </Center>
     );
 
     const morningAvailability =
-      data && data.getDoctor.availability.morning.length > 0;
+      data &&
+      data.getDoctor.availability &&
+      data.getDoctor.availability.morning.length > 0;
 
     const eveningAvailability =
-      data && data.getDoctor.availability.evening.length > 0;
+      data &&
+      data.getDoctor.availability &&
+      data.getDoctor.availability.evening.length > 0;
 
     const nightAvailability =
-      data && data.getDoctor.availability.night.length > 0;
+      data &&
+      data.getDoctor.availability &&
+      data.getDoctor.availability.night.length > 0;
 
     return (
       <>
@@ -114,17 +127,37 @@ const TimeSlotScreen = ({
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <TimeSlotCard
-        name={doctor?.name || 'Jason Donut'}
-        speciality={doctor?.speciality.name || 'Murivu Vaithiyam'}
-        experience={doctor?.experience || 12}
-        id={doctorId}
-        onClick={() => navigation.navigate('DoctorProfile', {doctorId})}
-      />
-      <Calender />
-      {renderTimeSlots()}
-    </ScrollView>
+    <>
+      <ScrollView style={styles.container}>
+        {doctor && (
+          <TimeSlotCard
+            name={doctor.name}
+            speciality={doctor.speciality.name}
+            experience={doctor.experience}
+            id={doctorId}
+            image={doctor.image!}
+            onClick={() => navigation.navigate('DoctorProfile', {doctorId})}
+          />
+        )}
+        <Calender />
+        {renderTimeSlots()}
+      </ScrollView>
+      <Center
+        style={styles.next}
+        display={selectedSlot ? 'block' : 'none'}
+        py="2">
+        <Button
+          backgroundColor={Colors.primary}
+          onPress={() => navigation.navigate('Appointment', {doctorId})}>
+          <HStack alignItems="center">
+            <Text h3 style={{color: Colors.white}}>
+              Make Appointment
+            </Text>
+            <ArrowForwardIcon mx="1" color={Colors.white} />
+          </HStack>
+        </Button>
+      </Center>
+    </>
   );
 };
 
@@ -132,6 +165,13 @@ export default TimeSlotScreen;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
+    position: 'relative',
+  },
+  next: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: 'white',
   },
 });

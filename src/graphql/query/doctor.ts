@@ -3,15 +3,34 @@ import {gql} from '../../__generated__';
 export const GET_SPECIALISTS = gql(`
   query GetSpecialists($specialityId: String!) {
     getSpecialists(specialityId: $specialityId) {
+    name
+    image
+    rating
+    experience
+    id
+    speciality {
       name
-      image
-      rating
-      experience
-      id
-      speciality {
-        name
-      }
     }
+    email
+    address
+    phone
+  }
+  }
+`);
+
+export const DOCTOR_INFO = gql(`
+  fragment DoctorInfo on Doctor{
+    name
+    image
+    rating
+    experience
+    id
+    speciality {
+      name
+    }
+    email
+    address
+    phone
   }
 `);
 

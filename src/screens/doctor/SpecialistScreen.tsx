@@ -8,6 +8,7 @@ import {useQuery} from '@apollo/client';
 import {GET_SPECIALISTS} from '../../graphql/query/doctor';
 import ErrorComponent from '../../components/ErrorComponent';
 import {DoctorsLoading} from '../../components/skeletons/Loading';
+import {renderToStringWithData} from '@apollo/client/react/ssr';
 
 const SpecialistScreen = ({
   navigation,
@@ -32,11 +33,10 @@ const SpecialistScreen = ({
         <ErrorComponent error="an unknown error occurred. checkout later" />
       );
     }
-    const renderData = data!.getSpecialists!;
+    const renderData = data?.getSpecialists;
+
     return (
       <FlatList
-        horizontal
-        showsHorizontalScrollIndicator={false}
         data={renderData}
         keyExtractor={item => {
           if (!item) {
@@ -56,7 +56,7 @@ const SpecialistScreen = ({
               experience={item.experience}
               speciality={item.speciality.name}
               onPress={() =>
-                navigation.navigate('Specialists', {specialityId: item.id})
+                navigation.navigate('TimeSlot', {doctorId: item.id})
               }
             />
           );

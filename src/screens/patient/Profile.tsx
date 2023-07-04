@@ -1,16 +1,17 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
-import {Avatar, Button, Flex, Box} from 'native-base';
-import Icons from '../../constants/Icons';
+import React, {useState} from 'react';
+import {Avatar, Button, Flex, Box, Stack, Spinner} from 'native-base';
 import Text from '../../components/text/Text';
 import Colors from '../../constants/Colors';
 import SectionTitle from '../../components/text/SectionTitle';
 import ProfileScreenList from '../../components/cards/ProfileScreenList';
+import {useUser, useClerk} from '@clerk/clerk-expo';
 
 // Icons
 import Octicons from 'react-native-vector-icons/Octicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {ProfileSkeleton} from '../../components/skeletons/cards';
 
 const accountData = [
   {
@@ -49,8 +50,19 @@ const appData = [
 ];
 
 const ProfileScreen = () => {
-  const logout = () => {
-    //
+  const {isLoaded, user} = useUser();
+  const {signOut} = useClerk();
+  const [loading, setLoading] = useState(false);
+
+  const logout = async () => {
+    setLoading(true);
+    try {
+      await signOut();
+    } catch (error) {
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,10 +74,20 @@ const ProfileScreen = () => {
         px={5}
         py={4}
         bg={Colors.white}>
-        <Flex direction="row" alignItems="center">
-          <Avatar source={Icons.DoctorImage} style={styles.avatarImage} />
-          <Text h3>Patioent zeo</Text>
-        </Flex>
+        {!isLoaded ? (
+          <ProfileSkeleton />
+        ) : (
+          <Flex direction="row" alignItems="center">
+            <Avatar
+              source={{uri: user?.profileImageUrl}}
+              style={styles.avatarImage}
+            />
+            <Stack>
+              <Text h3>{user?.fullName!}</Text>
+              <Text h4>{user?.emailAddresses[0].emailAddress!}</Text>
+            </Stack>
+          </Flex>
+        )}
         <Button variant="ghost">
           <Text h3 style={styles.editbtnText}>
             Edit Profile
@@ -97,7 +119,11 @@ const ProfileScreen = () => {
       <Box px={5} mt={3}>
         <ProfileScreenList
           // eslint-disable-next-line react/no-unstable-nested-components
-          ListIcon={() => <Entypo name="log-out" size={30} />}
+          ListIcon={
+            loading
+              ? () => <Spinner color={Colors.primary} />
+              : () => <Entypo name="log-out" size={30} />
+          }
           title="Log Out"
           onPress={logout}
         />

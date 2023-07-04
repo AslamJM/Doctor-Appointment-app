@@ -48,7 +48,7 @@ export enum AppointmentStatus {
 export type Doctor = {
   __typename?: 'Doctor';
   address: Scalars['String']['output'];
-  availability: DoctorAvailability;
+  availability?: Maybe<DoctorAvailability>;
   description?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   experience: Scalars['Int']['output'];
@@ -195,7 +195,6 @@ export type MutationCreateSpecialityArgs = {
 
 export type MutationCreateUserArgs = {
   authId: Scalars['String']['input'];
-  name: Scalars['String']['input'];
 };
 
 
@@ -220,7 +219,7 @@ export type MutationDeleteSpecialityArgs = {
 
 
 export type MutationDeleteUserArgs = {
-  id: Scalars['ID']['input'];
+  authId: Scalars['String']['input'];
 };
 
 
@@ -255,8 +254,7 @@ export type MutationUpdateSpecialityArgs = {
 
 
 export type MutationUpdateUserArgs = {
-  id: Scalars['ID']['input'];
-  name: Scalars['String']['input'];
+  authId: Scalars['String']['input'];
 };
 
 export type Query = {
@@ -347,9 +345,7 @@ export type UpdateAppointmentInput = {
 
 export type User = {
   __typename?: 'User';
-  authId: Scalars['String']['output'];
   id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
 };
 
 export type UserMutationResponse = {
@@ -364,7 +360,7 @@ export type CreateAppointmentMutationVariables = Exact<{
 }>;
 
 
-export type CreateAppointmentMutation = { __typename?: 'Mutation', createAppointment: { __typename?: 'AppointmentMutationResponse', appointment?: { __typename?: 'Appointment', status: AppointmentStatus, time: string } | null } };
+export type CreateAppointmentMutation = { __typename?: 'Mutation', createAppointment: { __typename?: 'AppointmentMutationResponse', message: string, success: boolean, appointment?: { __typename?: 'Appointment', id: string, status: AppointmentStatus, time: string, doctor: { __typename?: 'Doctor', name: string, speciality: { __typename?: 'Speciality', name: string } } } | null } };
 
 export type UpdateAppointmentMutationVariables = Exact<{
   updateAppointmentId: Scalars['ID']['input'];
@@ -373,6 +369,13 @@ export type UpdateAppointmentMutationVariables = Exact<{
 
 
 export type UpdateAppointmentMutation = { __typename?: 'Mutation', updateAppointment: { __typename?: 'AppointmentMutationResponse', message: string, success: boolean } };
+
+export type CreateUserMutationVariables = Exact<{
+  authId: Scalars['String']['input'];
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser: { __typename?: 'UserMutationResponse', success: boolean, message: string } };
 
 export type GetAppointmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -384,26 +387,28 @@ export type GetSpecialistsQueryVariables = Exact<{
 }>;
 
 
-export type GetSpecialistsQuery = { __typename?: 'Query', getSpecialists?: Array<{ __typename?: 'Doctor', name: string, image?: string | null, rating?: number | null, experience: number, id: string, speciality: { __typename?: 'Speciality', name: string } } | null> | null };
+export type GetSpecialistsQuery = { __typename?: 'Query', getSpecialists?: Array<{ __typename?: 'Doctor', name: string, image?: string | null, rating?: number | null, experience: number, id: string, email: string, address: string, phone: string, speciality: { __typename?: 'Speciality', name: string } } | null> | null };
+
+export type DoctorInfoFragment = { __typename?: 'Doctor', name: string, image?: string | null, rating?: number | null, experience: number, id: string, email: string, address: string, phone: string, speciality: { __typename?: 'Speciality', name: string } } & { ' $fragmentName'?: 'DoctorInfoFragment' };
 
 export type GetDoctorQueryVariables = Exact<{
   getDoctorId: Scalars['ID']['input'];
 }>;
 
 
-export type GetDoctorQuery = { __typename?: 'Query', getDoctor: { __typename?: 'Doctor', address: string, description?: string | null, experience: number, id: string, image?: string | null, name: string, rating?: number | null, availability: { __typename?: 'DoctorAvailability', evening: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }>, morning: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }>, night: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }> }, speciality: { __typename?: 'Speciality', name: string } } };
+export type GetDoctorQuery = { __typename?: 'Query', getDoctor: { __typename?: 'Doctor', address: string, description?: string | null, experience: number, id: string, image?: string | null, name: string, rating?: number | null, availability?: { __typename?: 'DoctorAvailability', evening: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }>, morning: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }>, night: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }> } | null, speciality: { __typename?: 'Speciality', name: string } } };
 
 export type GetDoctorAvailablityQueryVariables = Exact<{
   getDoctorId: Scalars['ID']['input'];
 }>;
 
 
-export type GetDoctorAvailablityQuery = { __typename?: 'Query', getDoctor: { __typename?: 'Doctor', availability: { __typename?: 'DoctorAvailability', evening: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }>, morning: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }>, night: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }> } } };
+export type GetDoctorAvailablityQuery = { __typename?: 'Query', getDoctor: { __typename?: 'Doctor', availability?: { __typename?: 'DoctorAvailability', evening: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }>, morning: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }>, night: Array<{ __typename?: 'TimeSlot', endTime: string, startTime: string }> } | null } };
 
 export type GetHospitalsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetHospitalsQuery = { __typename?: 'Query', getHospitals?: Array<{ __typename?: 'Hospital', id: string, name: string, address: string, image: string } | null> | null };
+export type GetHospitalsQuery = { __typename?: 'Query', getHospitals?: Array<{ __typename?: 'Hospital', id: string, name: string, address: string, image: string, openTime?: string | null } | null> | null };
 
 export type GetHospitalQueryVariables = Exact<{
   getHospitalId: Scalars['ID']['input'];
@@ -417,13 +422,14 @@ export type GetSpecialitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetSpecialitiesQuery = { __typename?: 'Query', getSpecialities?: Array<{ __typename?: 'Speciality', id: string, name: string, image: string } | null> | null };
 
-
-export const CreateAppointmentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateAppointment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appointmentInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AppointmentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createAppointment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"appointmentInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appointmentInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"appointment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"time"}}]}}]}}]}}]} as unknown as DocumentNode<CreateAppointmentMutation, CreateAppointmentMutationVariables>;
+export const DoctorInfoFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DoctorInfo"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Doctor"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}},{"kind":"Field","name":{"kind":"Name","value":"experience"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"speciality"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}}]} as unknown as DocumentNode<DoctorInfoFragment, unknown>;
+export const CreateAppointmentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateAppointment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"appointmentInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AppointmentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createAppointment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"appointmentInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"appointmentInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"appointment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"doctor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"speciality"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"time"}}]}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"success"}}]}}]}}]} as unknown as DocumentNode<CreateAppointmentMutation, CreateAppointmentMutationVariables>;
 export const UpdateAppointmentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateAppointment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateAppointmentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateAppointmentInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateAppointmentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAppointment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateAppointmentId"}}},{"kind":"Argument","name":{"kind":"Name","value":"updateAppointmentInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateAppointmentInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"success"}}]}}]}}]} as unknown as DocumentNode<UpdateAppointmentMutation, UpdateAppointmentMutationVariables>;
+export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"authId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
 export const GetAppointmentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAppointments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAppointments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"doctor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"speciality"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"time"}}]}}]}}]} as unknown as DocumentNode<GetAppointmentsQuery, GetAppointmentsQueryVariables>;
-export const GetSpecialistsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSpecialists"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"specialityId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSpecialists"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"specialityId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"specialityId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}},{"kind":"Field","name":{"kind":"Name","value":"experience"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"speciality"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetSpecialistsQuery, GetSpecialistsQueryVariables>;
+export const GetSpecialistsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSpecialists"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"specialityId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSpecialists"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"specialityId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"specialityId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}},{"kind":"Field","name":{"kind":"Name","value":"experience"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"speciality"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}}]}}]} as unknown as DocumentNode<GetSpecialistsQuery, GetSpecialistsQueryVariables>;
 export const GetDoctorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDoctor"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getDoctorId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getDoctor"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getDoctorId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"availability"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"evening"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}}]}},{"kind":"Field","name":{"kind":"Name","value":"morning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}}]}},{"kind":"Field","name":{"kind":"Name","value":"night"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"experience"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"rating"}},{"kind":"Field","name":{"kind":"Name","value":"speciality"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetDoctorQuery, GetDoctorQueryVariables>;
 export const GetDoctorAvailablityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetDoctorAvailablity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getDoctorId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getDoctor"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getDoctorId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"availability"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"evening"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}}]}},{"kind":"Field","name":{"kind":"Name","value":"morning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}}]}},{"kind":"Field","name":{"kind":"Name","value":"night"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endTime"}},{"kind":"Field","name":{"kind":"Name","value":"startTime"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetDoctorAvailablityQuery, GetDoctorAvailablityQueryVariables>;
-export const GetHospitalsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHospitals"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHospitals"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]} as unknown as DocumentNode<GetHospitalsQuery, GetHospitalsQueryVariables>;
+export const GetHospitalsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHospitals"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHospitals"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"openTime"}}]}}]}}]} as unknown as DocumentNode<GetHospitalsQuery, GetHospitalsQueryVariables>;
 export const GetHospitalDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHospital"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"getHospitalId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getHospital"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"getHospitalId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"facilities"}},{"kind":"Field","name":{"kind":"Name","value":"geolocation"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"coordinates"}},{"kind":"Field","name":{"kind":"Name","value":"type"}}]}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"openTime"}}]}}]}}]} as unknown as DocumentNode<GetHospitalQuery, GetHospitalQueryVariables>;
 export const GetSpecialitiesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSpecialities"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getSpecialities"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]}}]} as unknown as DocumentNode<GetSpecialitiesQuery, GetSpecialitiesQueryVariables>;

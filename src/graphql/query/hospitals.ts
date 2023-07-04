@@ -7,6 +7,7 @@ export const GET_HOSPITALS = gql(`
       name
       address
       image
+      openTime
     }
   }
 `);

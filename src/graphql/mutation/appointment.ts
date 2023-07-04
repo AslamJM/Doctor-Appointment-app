@@ -4,9 +4,18 @@ export const CREATE_APPOINTMENT = gql(`
   mutation CreateAppointment($appointmentInput: AppointmentInput!) {
     createAppointment(appointmentInput: $appointmentInput) {
       appointment {
-        status
-        time
+        id
+      status
+      doctor {
+        name
+        speciality {
+          name
+        }
       }
+      time
+      }
+      message
+      success
     }
   }
 `);

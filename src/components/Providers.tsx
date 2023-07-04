@@ -15,7 +15,7 @@ const Providers = ({children}: PropsWithChildren) => {
     <SafeAreaProvider>
       <ClerkProvider
         tokenCache={tokenCache}
-        publishableKey="pk_test_YWxlcnQtY2FyaWJvdS03OS5jbGVyay5hY2NvdW50cy5kZXYk">
+        publishableKey="pk_test_ZGFybGluZy1oYWxpYnV0LTk4LmNsZXJrLmFjY291bnRzLmRldiQ">
         <ApolloProviderWrapper>
           <NativeBaseProvider>
             <AppProvider>

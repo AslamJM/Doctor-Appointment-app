@@ -17,6 +17,9 @@ import Fonts from '../../constants/Fonts';
 import {useSignUp, useSignIn, isClerkAPIResponseError} from '@clerk/clerk-expo';
 import {AuthStackScreenProps} from '../../navigation/types';
 
+import {useMutation} from '@apollo/client';
+import {CREATE_USER} from '../../graphql/mutation/user';
+
 const VerifyCodeScreen = ({
   route,
   navigation,
@@ -34,6 +37,7 @@ const VerifyCodeScreen = ({
     signIn,
     setSession: setSignInSession,
   } = useSignIn();
+  const [create] = useMutation(CREATE_USER);
 
   // sign up
   const verifySignUp = async () => {
@@ -46,6 +50,11 @@ const VerifyCodeScreen = ({
         code,
       });
       await setSession(completeSignUp.createdSessionId);
+      await create({
+        variables: {
+          authId: completeSignUp.createdUserId!,
+        },
+      });
     } catch (error) {
       if (isClerkAPIResponseError(error)) {
         setError(error.message);

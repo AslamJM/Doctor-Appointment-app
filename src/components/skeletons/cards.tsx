@@ -1,10 +1,10 @@
-import {Skeleton, Center, Flex} from 'native-base';
+import {Skeleton, Center, Flex, HStack} from 'native-base';
 import React from 'react';
 import Colors from '../../constants/Colors';
 
 const SpecialitySkeleton = () => {
   return (
-    <Center width={140} height={120} background={Colors.white} mx={2}>
+    <Center width={140} height={120} background={Colors.white} mx={2} p="2">
       <Skeleton h="50" w="50" />
       <Skeleton.Text px="4" my={2} />
     </Center>
@@ -39,11 +39,20 @@ const DoctorSkeleton = () => {
 };
 
 const SlotSkeleton = () => {
-  return <Skeleton width="100" />;
+  return <Skeleton width="100" m={1} />;
 };
 
 const MapSkeleton = () => {
   return <Skeleton h="270" rounded="md" startColor={Colors.primary} />;
+};
+
+const ProfileSkeleton = () => {
+  return (
+    <HStack p="4">
+      <Skeleton h="50" w="50" rounded="full" />
+      <Skeleton.Text mx="4" />
+    </HStack>
+  );
 };
 
 export {
@@ -53,4 +62,5 @@ export {
   SlotSkeleton,
   SpecialitySkeletonVertical,
   MapSkeleton,
+  ProfileSkeleton,
 };

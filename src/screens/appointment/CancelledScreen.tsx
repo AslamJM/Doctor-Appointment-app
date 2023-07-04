@@ -2,7 +2,8 @@ import {StyleSheet, View} from 'react-native';
 import React, {useCallback} from 'react';
 import AppointmentCard from '../../components/cards/AppointmentCard';
 import {useAppointmentContext} from '../../navigation/AppointmentTabNavigator';
-import {FlatList} from 'native-base';
+import {Center, FlatList} from 'native-base';
+import Text from '../../components/text/Text';
 
 const CancelledScreen = () => {
   const {appointments} = useAppointmentContext();
@@ -22,6 +23,11 @@ const CancelledScreen = () => {
             time={item.time}
           />
         )}
+        ListEmptyComponent={
+          <Center h={500}>
+            <Text h3>No cancelled appointments</Text>
+          </Center>
+        }
       />
     </View>
   );
@@ -30,5 +36,7 @@ const CancelledScreen = () => {
 export default CancelledScreen;
 
 const styles = StyleSheet.create({
-  main: {},
+  main: {
+    paddingHorizontal: 10,
+  },
 });

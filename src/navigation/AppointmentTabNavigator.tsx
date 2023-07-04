@@ -36,9 +36,8 @@ const AppointmentTabsNavigator = () => {
   }
 
   const appointments = data?.getAppointments;
-
   return (
-    <AppointmentContext.Provider value={{appointments: appointments!}}>
+    <AppointmentContext.Provider value={{appointments: appointments ?? []}}>
       <AppointmentTabs.Navigator>
         <AppointmentTabs.Screen
           name="Pending"

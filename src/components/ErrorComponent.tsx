@@ -25,7 +25,9 @@ const ErrorComponent = ({error}: ErrorProps) => {
   };
   return (
     <View style={styles.main}>
-      <Text h3>{errorText()}</Text>
+      <Text h4 style={styles.text}>
+        {errorText()}
+      </Text>
     </View>
   );
 };
@@ -37,5 +39,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginVertical: 6,
+  },
+  text: {
+    color: 'red',
   },
 });
