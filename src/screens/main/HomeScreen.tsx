@@ -22,12 +22,16 @@ import {
 } from '../../components/skeletons/Loading';
 
 const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
-  const {loading, data, error} = useQuery(GET_SPECIALITIES);
+  const {loading, data, error, refetch} = useQuery(GET_SPECIALITIES);
   const {
     loading: hosLoading,
     data: hosData,
     error: hosError,
+    refetch: hosRefetch,
+    networkStatus,
   } = useQuery(GET_HOSPITALS);
+
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
 
   // render specialities
   const renderSpecialities = () => {
@@ -48,6 +52,8 @@ const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={renderData}
+        refreshing={isRefreshing}
+        onRefresh={refetch}
         keyExtractor={item => {
           if (!item) {
             return Math.random().toString();
@@ -93,6 +99,8 @@ const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
       <FlatList
         initialNumToRender={10}
         data={hospitals}
+        refreshing={hosLoading}
+        onRefresh={hosRefetch}
         keyExtractor={item => {
           if (!item) {
             return Math.random().toString();

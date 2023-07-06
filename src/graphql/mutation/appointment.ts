@@ -2,22 +2,11 @@ import {gql} from '../../__generated__';
 
 export const CREATE_APPOINTMENT = gql(`
   mutation CreateAppointment($appointmentInput: AppointmentInput!) {
-    createAppointment(appointmentInput: $appointmentInput) {
-      appointment {
-        id
-      status
-      doctor {
-        name
-        speciality {
-          name
-        }
-      }
-      time
-      }
-      message
-      success
-    }
+  createAppointment(appointmentInput: $appointmentInput) {
+    message
+    success
   }
+}
 `);
 
 export const UPDATE_APPOINTMENT = gql(`

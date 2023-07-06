@@ -1,6 +1,6 @@
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {Box, Flex, Circle} from 'native-base';
+import {Box, ChevronRightIcon, Circle, HStack} from 'native-base';
 import Colors from '../../constants/Colors';
 import Fonts, {sizes} from '../../constants/Fonts';
 import dayjs from 'dayjs';
@@ -10,6 +10,7 @@ type Props = {
   doctor: string;
   speciality: string;
   time: string;
+  onPress: () => void;
 };
 
 const getbgColor = (status: 'PENDING' | 'COMPLETED' | 'CANCELLED') => {
@@ -23,18 +24,36 @@ const getbgColor = (status: 'PENDING' | 'COMPLETED' | 'CANCELLED') => {
   }
 };
 
-const AppointmentCard = ({status, time, doctor, speciality}: Props) => {
+const AppointmentCard = ({
+  status,
+  time,
+  doctor,
+  speciality,
+  onPress,
+}: Props) => {
   return (
-    <Flex direction="row" style={styles.container}>
-      <Circle style={[{...styles.circle, backgroundColor: getbgColor(status)}]}>
-        <Text style={styles.date}>{dayjs(time).format('DD MMM YYYY')}</Text>
-      </Circle>
-      <Box style={styles.content}>
-        <Text style={styles.time}>{dayjs(time).format('HH:MM A')}</Text>
-        <Text style={styles.name}>{doctor}</Text>
-        <Text style={styles.field}>{speciality}</Text>
-      </Box>
-    </Flex>
+    <HStack
+      justifyContent="space-between"
+      style={styles.container}
+      alignItems="center">
+      <HStack h="full" flexGrow={1} alignItems="center">
+        <Circle
+          style={[{...styles.circle, backgroundColor: getbgColor(status)}]}>
+          <Text style={styles.date}>{dayjs(time).format('DD MMM YYYY')}</Text>
+        </Circle>
+        <Box style={styles.content}>
+          <Text style={styles.time}>{dayjs(time).format('HH:MM A')}</Text>
+          <Text style={styles.name}>{doctor}</Text>
+          <Text style={styles.field}>{speciality}</Text>
+        </Box>
+      </HStack>
+      <TouchableOpacity onPress={onPress}>
+        <HStack alignItems="center">
+          <Text style={styles.details}>Details</Text>
+          <ChevronRightIcon color={Colors.primary} ml="2" />
+        </HStack>
+      </TouchableOpacity>
+    </HStack>
   );
 };
 
@@ -49,18 +68,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   circle: {
-    flex: 1,
     aspectRatio: 1,
     padding: 5,
   },
   date: {
     ...Fonts.bold,
-    fontSize: sizes.h4,
+    fontSize: sizes.h5,
   },
   content: {
     paddingVertical: 8,
     paddingHorizontal: 16,
-    flex: 3,
     justifyContent: 'space-between',
   },
   time: {
@@ -75,5 +92,8 @@ const styles = StyleSheet.create({
     ...Fonts.light,
     color: Colors.red,
     fontSize: sizes.body5,
+  },
+  details: {
+    ...Fonts.bold,
   },
 });

@@ -1,6 +1,7 @@
 import {StackScreenProps} from '@react-navigation/stack';
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
 import type {
+  CompositeScreenProps,
   // CompositeScreenProps,
   NavigatorScreenParams,
 } from '@react-navigation/native';
@@ -44,6 +45,24 @@ export type RootBottomTabScreenProps<Screen extends keyof BottomTabParamList> =
 
 // Appointment Tabs
 
+export type AppointmentStackParams = {
+  AppointmentTabs: undefined;
+  AppointmentDetail: {
+    appointmentId: string;
+  };
+};
+
+export type AppointmentStackScreenProps<
+  Screen extends keyof AppointmentStackParams,
+  TabScreen extends keyof AppointTabParams,
+> = CompositeScreenProps<
+  StackScreenProps<AppointmentStackParams, Screen>,
+  CompositeScreenProps<
+    MaterialTopTabScreenProps<AppointTabParams, TabScreen>,
+    BottomTabScreenProps<BottomTabParamList, 'Appointments'>
+  >
+>;
+
 export type AppointTabParams = {
   Pending: undefined;
   Cancelled: undefined;
@@ -65,3 +84,15 @@ export type AuthStackParams = {
 
 export type AuthStackScreenProps<Screen extends keyof AuthStackParams> =
   StackScreenProps<AuthStackParams, Screen>;
+
+// profile Stack
+export type ProfileStackParams = {
+  ProfileMain: undefined;
+  Patients: undefined;
+};
+
+export type ProfileStackScreenProps<Screen extends keyof ProfileStackParams> =
+  CompositeScreenProps<
+    StackScreenProps<ProfileStackParams, Screen>,
+    BottomTabScreenProps<BottomTabParamList, 'Profile'>
+  >;

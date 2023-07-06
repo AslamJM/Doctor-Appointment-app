@@ -1,9 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
-import ProfileScreen from '../patient/Profile';
+import ProfileStackNavigator from '../../navigation/ProfileStackNavigator';
 
 const ProfileStack = () => {
-  return <ProfileScreen />;
+  return <ProfileStackNavigator />;
 };
 
 export default ProfileStack;

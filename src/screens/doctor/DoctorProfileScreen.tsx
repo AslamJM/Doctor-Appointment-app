@@ -5,21 +5,42 @@ import Icons from '../../constants/Icons';
 import Colors from '../../constants/Colors';
 import Text from '../../components/text/Text';
 import SectionTitle from '../../components/text/SectionTitle';
+import {useQuery, useApolloClient, gql} from '@apollo/client';
 
-const DoctorProfileScreen = () => {
+import {HomeStackScreenProps} from '../../navigation/types';
+import {Doctor} from '../../__generated__/graphql';
+
+const DoctorProfileScreen = ({
+  route,
+}: HomeStackScreenProps<'DoctorProfile'>) => {
+  const {doctorId} = route.params;
+  const client = useApolloClient();
+
+  const doctor = client.readFragment<Doctor>({
+    id: `Doctor:${doctorId}`,
+    fragment: gql`
+      fragment GetDocProf on Doctor {
+        name
+        image
+        email
+        phone
+      }
+    `,
+  });
+
   return (
     <View style={styles.container}>
       <Flex direction="row" style={styles.details}>
         <Box>
-          <Image source={Icons.DoctorImage} style={styles.drImage} />
+          <Image source={{uri: doctor!.image!}} style={styles.drImage} />
         </Box>
         <Box style={styles.drDetails}>
-          <Text h3>Dr. Kiladu Daileee</Text>
+          <Text h3>{doctor!.name}</Text>
           <Text h4 style={styles.contactText}>
-            678-34455-565
+            {doctor!.phone}
           </Text>
           <Text h4 style={styles.contactText}>
-            asad@fdfdf.com
+            {doctor!.email || 'not available'}
           </Text>
         </Box>
       </Flex>
@@ -47,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   drImage: {
-    height: 150,
+    height: 130,
     aspectRatio: 1,
     borderRadius: 8,
   },

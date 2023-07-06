@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {Button, Flex, Pressable} from 'native-base';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import {Button, Flex} from 'native-base';
 import Text from '../text/Text';
 
 import React from 'react';
@@ -14,7 +14,7 @@ interface Props {
 
 const ProfileScreenList = ({title, ListIcon, onPress}: Props) => {
   return (
-    <Pressable onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
       <Flex
         direction="row"
         alignItems="center"
@@ -27,11 +27,11 @@ const ProfileScreenList = ({title, ListIcon, onPress}: Props) => {
             {title}
           </Text>
         </Flex>
-        <Button variant="ghost">
+        <Button variant="ghost" onPress={onPress}>
           <Entypo name="chevron-right" size={30} color={Colors.primary} />
         </Button>
       </Flex>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

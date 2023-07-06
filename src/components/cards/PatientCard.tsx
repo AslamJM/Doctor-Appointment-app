@@ -9,8 +9,10 @@ type Props = {
 
 const PatientCard = ({name, age}: Props) => {
   return (
-    <Stack py="4" bg="white" rounded="md" my="3" px="3">
-      <Text h3>{name}</Text>
+    <Stack py="2" bg="white" rounded="md" my="1" px="3">
+      <Text h3 style={{color: 'black'}}>
+        {name}
+      </Text>
       <Text h4>{`${age} years old`}</Text>
     </Stack>
   );

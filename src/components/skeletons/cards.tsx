@@ -6,7 +6,7 @@ const SpecialitySkeleton = () => {
   return (
     <Center width={140} height={120} background={Colors.white} mx={2} p="2">
       <Skeleton h="50" w="50" />
-      <Skeleton.Text px="4" my={2} />
+      <Skeleton px="4" my={2} h="10" />
     </Center>
   );
 };

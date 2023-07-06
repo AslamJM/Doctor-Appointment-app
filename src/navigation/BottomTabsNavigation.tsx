@@ -6,6 +6,7 @@ import BottomTabBar from '../components/BottomTabBar';
 
 //screens
 import HomeStackNavigator from './HomeStackNavigator';
+import AppointmentStackNavigator from './AppointmentStackNavigator';
 import AppointmentTabs from '../screens/main/AppointmentTabs';
 import Chats from '../screens/main/Chats';
 import ProfileStack from '../screens/main/ProfileStack';
@@ -24,17 +25,7 @@ const BottomTabNavigator = () => {
       <BottomTabs.Screen name="Main" component={HomeStackNavigator} />
       <BottomTabs.Screen
         name="Appointments"
-        component={AppointmentTabs}
-        options={{
-          headerShown: true,
-          header(props) {
-            return (
-              <Center py="2" bg="white">
-                <Text h3>{props.route.name}</Text>
-              </Center>
-            );
-          },
-        }}
+        component={AppointmentStackNavigator}
       />
       <BottomTabs.Screen name="Messages" component={Chats} />
       <BottomTabs.Screen name="Profile" component={ProfileStack} />

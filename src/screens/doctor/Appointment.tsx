@@ -22,14 +22,15 @@ const Appointment = ({
   const {user} = useUser();
   const {selectedSlot} = useAppContext();
   const [loading, setLoading] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState('');
 
   // appointment mutation
   const [createMutation] = useMutation(CREATE_APPOINTMENT, {
     variables: {
       appointmentInput: {
         doctorId,
+        patientId: selectedPatient,
         time: convertTimeToISOString(selectedSlot),
-        userId: user?.id!,
       },
     },
   });

@@ -2,14 +2,27 @@ import {StyleSheet, View} from 'react-native';
 import React, {useCallback} from 'react';
 import AppointmentCard from '../../components/cards/AppointmentCard';
 import {useAppointmentContext} from '../../navigation/AppointmentTabNavigator';
-import {Center, FlatList} from 'native-base';
+import {Center, FlatList, Spinner} from 'native-base';
 import Text from '../../components/text/Text';
+import Colors from '../../constants/Colors';
 
-const CompletedScreen = () => {
-  const {appointments} = useAppointmentContext();
+import {AppointmentStackScreenProps} from '../../navigation/types';
+
+const CompletedScreen = ({
+  navigation,
+}: AppointmentStackScreenProps<'AppointmentTabs', 'Completed'>) => {
+  const {appointments, loading} = useAppointmentContext();
   const CompletedAppointments = useCallback(() => {
     return appointments.filter(app => app.status === 'COMPLETED');
   }, [appointments]);
+
+  if (loading) {
+    return (
+      <Center flex={1}>
+        <Spinner color={Colors.primary} />
+      </Center>
+    );
+  }
 
   return (
     <View style={styles.main}>
@@ -22,6 +35,11 @@ const CompletedScreen = () => {
             speciality={item.doctor.speciality.name}
             status="COMPLETED"
             time={item.time}
+            onPress={() =>
+              navigation.navigate('AppointmentDetail', {
+                appointmentId: item.id,
+              })
+            }
           />
         )}
         ListEmptyComponent={

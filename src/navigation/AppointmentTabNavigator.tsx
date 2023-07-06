@@ -6,9 +6,9 @@ import PendingScreen from '../screens/appointment/PendingScreen';
 import CompletedScreen from '../screens/appointment/CompletedScreen';
 import CancelledScreen from '../screens/appointment/CancelledScreen';
 
-import {GetAppointmentsQuery} from '../__generated__/graphql';
+import {GetUserAppointmentsQuery} from '../__generated__/graphql';
 import {useQuery} from '@apollo/client';
-import {GET_APPOINTMENTS} from '../graphql/query/appointment';
+import {GET_MY_APPOINTMENTS} from '../graphql/query/appointment';
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import ErrorComponent from '../components/ErrorComponent';
@@ -16,28 +16,31 @@ import ErrorComponent from '../components/ErrorComponent';
 const AppointmentTabs = createMaterialTopTabNavigator<AppointTabParams>();
 
 type GetAppointments = Pick<
-  GetAppointmentsQuery,
-  'getAppointments'
->['getAppointments'];
+  GetUserAppointmentsQuery,
+  'getUserAppointments'
+>['getUserAppointments'];
 
 const AppointmentContext = React.createContext<{
   appointments: GetAppointments;
+  loading: boolean;
 }>({
   appointments: [],
+  loading: true,
 });
 
 export const useAppointmentContext = () => React.useContext(AppointmentContext);
 
 const AppointmentTabsNavigator = () => {
-  const {data, error, loading} = useQuery(GET_APPOINTMENTS);
+  const {data, error, loading} = useQuery(GET_MY_APPOINTMENTS);
 
   if (error) {
     return <ErrorComponent error={error} />;
   }
 
-  const appointments = data?.getAppointments;
+  const appointments = data?.getUserAppointments;
   return (
-    <AppointmentContext.Provider value={{appointments: appointments ?? []}}>
+    <AppointmentContext.Provider
+      value={{appointments: appointments ?? [], loading}}>
       <AppointmentTabs.Navigator>
         <AppointmentTabs.Screen
           name="Pending"

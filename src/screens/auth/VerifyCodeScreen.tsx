@@ -50,11 +50,7 @@ const VerifyCodeScreen = ({
         code,
       });
       await setSession(completeSignUp.createdSessionId);
-      await create({
-        variables: {
-          authId: completeSignUp.createdUserId!,
-        },
-      });
+      await create();
     } catch (error) {
       if (isClerkAPIResponseError(error)) {
         setError(error.message);

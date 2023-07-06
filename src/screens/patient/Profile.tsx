@@ -13,18 +13,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {ProfileSkeleton} from '../../components/skeletons/cards';
 
-const accountData = [
-  {
-    title: 'Patient Directory',
-    icon: () => <Octicons name="file-directory" size={30} />,
-    onPress: () => {},
-  },
-  {
-    title: 'My History',
-    icon: () => <Octicons name="history" size={30} />,
-    onPress: () => {},
-  },
-];
+import {ProfileStackScreenProps} from '../../navigation/types';
 
 const appData = [
   {
@@ -49,10 +38,26 @@ const appData = [
   },
 ];
 
-const ProfileScreen = () => {
+const ProfileScreen = ({
+  navigation,
+}: ProfileStackScreenProps<'ProfileMain'>) => {
   const {isLoaded, user} = useUser();
   const {signOut} = useClerk();
   const [loading, setLoading] = useState(false);
+
+  // account data
+  const accountData = [
+    {
+      title: 'Patient Directory',
+      icon: () => <Octicons name="file-directory" size={30} />,
+      onPress: () => navigation.navigate('Patients'),
+    },
+    {
+      title: 'My History',
+      icon: () => <Octicons name="history" size={30} />,
+      onPress: () => {},
+    },
+  ];
 
   const logout = async () => {
     setLoading(true);
