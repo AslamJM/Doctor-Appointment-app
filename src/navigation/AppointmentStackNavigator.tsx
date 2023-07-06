@@ -26,7 +26,7 @@ const AppointmentStackNavigator = () => {
           header(props) {
             return (
               <Center py="2" bg="white">
-                <Text h3>'Your Appointments'</Text>
+                <Text h3>Your Appointments</Text>
               </Center>
             );
           },

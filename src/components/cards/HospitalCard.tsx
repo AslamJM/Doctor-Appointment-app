@@ -20,13 +20,19 @@ const HospitalCard = ({name, address, image, onPress}: HospitalCardProps) => {
         <Box style={styles.imageContainer}>
           <Image
             source={image ? {uri: image} : Icons.HospitalImage}
+            alt={name}
             style={styles.image}
           />
         </Box>
         <Box style={styles.contentContainer}>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.address}>{address}</Text>
-          <Flex direction="row" justifyContent="center" mt={2}>
+          <Flex
+            direction="row"
+            justifyContent="center"
+            mt={2}
+            position="absolute"
+            bottom={1}>
             <Button variant="outline" mr={2} borderColor={Colors.amber}>
               <Text style={styles.btnText}>Call Now</Text>
             </Button>
@@ -50,19 +56,22 @@ export default HospitalCard;
 
 const styles = StyleSheet.create({
   card: {
-    height: 140,
+    height: 150,
     overflow: 'hidden',
     borderRadius: sizes.radius,
     backgroundColor: Colors.white,
     marginVertical: 5,
+    position: 'relative',
   },
   imageContainer: {
     flex: 2,
     overflow: 'hidden',
+    padding: 8,
   },
   image: {
-    height: 175,
-    width: '100%',
+    height: 130,
+    width: 130,
+    borderRadius: 8,
   },
   contentContainer: {
     flex: 3,

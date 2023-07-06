@@ -18,6 +18,7 @@ const SpecialityCard = ({image, name, onPress}: CardProps) => {
       <Center>
         <Image
           source={image ? {uri: image} : Icons.WelcomeIcon}
+          alt={name}
           style={styles.image}
         />
         <Text style={styles.text}>{name}</Text>

@@ -172,9 +172,15 @@ const PatientListScreen = () => {
               isDisabled={name.length === 0 || age.length === 0}
               isLoading={formloading}
               onPress={createPatientHandler}>
-              <Text h3 style={{color: Colors.white}}>
-                {loading ? 'Adding...' : 'Add'}
-              </Text>
+              {loading ? (
+                <Text h3 style={{color: Colors.white}}>
+                  Adding...
+                </Text>
+              ) : (
+                <Text h3 style={{color: Colors.white}}>
+                  Add
+                </Text>
+              )}
             </Button>
           </Box>
         </Actionsheet.Content>

@@ -10,7 +10,7 @@ import {AppointmentStackScreenProps} from '../../navigation/types';
 
 const PendingScreen = ({
   navigation,
-}: AppointmentStackScreenProps<'AppointmentTabs', 'Pending'>) => {
+}: AppointmentStackScreenProps<'AppointmentTabs'>) => {
   const {appointments, loading} = useAppointmentContext();
   const pendingAppointments = useCallback(() => {
     return appointments.filter(app => app.status === 'PENDING');

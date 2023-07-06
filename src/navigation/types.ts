@@ -12,6 +12,7 @@ export type HomeStackParamList = {
   AllSpecialities: undefined;
   Specialists: {
     specialityId: string;
+    specialityName: string;
   };
   Hospital: {
     hospitalId: string;
@@ -54,11 +55,10 @@ export type AppointmentStackParams = {
 
 export type AppointmentStackScreenProps<
   Screen extends keyof AppointmentStackParams,
-  TabScreen extends keyof AppointTabParams,
 > = CompositeScreenProps<
   StackScreenProps<AppointmentStackParams, Screen>,
   CompositeScreenProps<
-    MaterialTopTabScreenProps<AppointTabParams, TabScreen>,
+    MaterialTopTabScreenProps<AppointTabParams>,
     BottomTabScreenProps<BottomTabParamList, 'Appointments'>
   >
 >;

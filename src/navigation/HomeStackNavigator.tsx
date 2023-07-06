@@ -10,6 +10,7 @@ import AllSpecialitiesScreen from '../screens/doctor/AllSpecialitiesScreen';
 import DoctorProfileScreen from '../screens/doctor/DoctorProfileScreen';
 import AppointmentScreen from '../screens/doctor/Appointment';
 import PatientListScreen from '../screens/patient/PatientListScreen';
+import StackHeaderBar from '../components/StackHeaderBar';
 
 const HomeStack = createStackNavigator<HomeStackParamList>();
 
@@ -21,13 +22,32 @@ const HomeStackNavigator = () => {
         ...TransitionPresets.SlideFromRightIOS,
       }}>
       <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen name="Specialists" component={SpecialistScreen} />
+      <HomeStack.Screen
+        name="Specialists"
+        component={SpecialistScreen}
+        options={{
+          headerShown: true,
+          header(props) {
+            return <StackHeaderBar {...props} />;
+          },
+        }}
+      />
       <HomeStack.Screen
         name="AllSpecialities"
         component={AllSpecialitiesScreen}
       />
       <HomeStack.Screen name="TimeSlot" component={TimeSlotScreen} />
-      <HomeStack.Screen name="Hospital" component={HospitalScreen} />
+      <HomeStack.Screen
+        name="Hospital"
+        component={HospitalScreen}
+        options={{
+          headerShown: true,
+          title: 'Hospital Details',
+          header(props) {
+            return <StackHeaderBar {...props} />;
+          },
+        }}
+      />
       <HomeStack.Screen name="DoctorProfile" component={DoctorProfileScreen} />
       <HomeStack.Screen name="Appointment" component={AppointmentScreen} />
       <HomeStack.Screen name="PatientList" component={PatientListScreen} />

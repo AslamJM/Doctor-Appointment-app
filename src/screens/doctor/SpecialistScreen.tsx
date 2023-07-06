@@ -8,18 +8,23 @@ import {useQuery} from '@apollo/client';
 import {GET_SPECIALISTS} from '../../graphql/query/doctor';
 import ErrorComponent from '../../components/ErrorComponent';
 import {DoctorsLoading} from '../../components/skeletons/Loading';
-import {renderToStringWithData} from '@apollo/client/react/ssr';
 
 const SpecialistScreen = ({
   navigation,
   route,
 }: HomeStackScreenProps<'Specialists'>) => {
-  const {specialityId} = route.params;
+  const {specialityId, specialityName} = route.params;
   const {loading, error, data} = useQuery(GET_SPECIALISTS, {
     variables: {
       specialityId,
     },
   });
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: specialityName,
+    });
+  }, [navigation, specialityName]);
 
   const renderSpecialists = () => {
     if (loading) {

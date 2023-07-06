@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 
 const Calender = () => {
   return (
-    <View>
+    <View style={{marginVertical: 10}}>
       <View style={{paddingHorizontal: 10}}>
         <CalendarStrip
           style={{

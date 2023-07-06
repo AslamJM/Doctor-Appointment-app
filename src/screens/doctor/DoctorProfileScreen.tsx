@@ -24,6 +24,7 @@ const DoctorProfileScreen = ({
         image
         email
         phone
+        address
       }
     `,
   });
@@ -42,6 +43,7 @@ const DoctorProfileScreen = ({
           <Text h4 style={styles.contactText}>
             {doctor!.email || 'not available'}
           </Text>
+          <Text h4>{doctor!.address}</Text>
         </Box>
       </Flex>
       <Text h4>

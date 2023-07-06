@@ -70,7 +70,10 @@ const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
               image={item.image}
               id={item.id}
               onPress={() =>
-                navigation.navigate('Specialists', {specialityId: item.id})
+                navigation.navigate('Specialists', {
+                  specialityId: item.id,
+                  specialityName: item.name,
+                })
               }
             />
           );

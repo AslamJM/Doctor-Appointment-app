@@ -18,6 +18,7 @@ const SpecialityCardHorizontal = ({image, name, onPress}: CardProps) => {
       <Flex direction="row" alignItems="center">
         <Image
           source={image ? {uri: image} : Icons.WelcomeIcon}
+          alt={name}
           style={styles.image}
         />
         <Text style={styles.text}>{name}</Text>

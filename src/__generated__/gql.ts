@@ -17,6 +17,7 @@ const documents = {
     "\n  mutation UpdateAppointment(\n    $updateAppointmentId: ID!\n    $updateAppointmentInput: UpdateAppointmentInput!\n  ) {\n    updateAppointment(\n      id: $updateAppointmentId\n      updateAppointmentInput: $updateAppointmentInput\n    ) {\n      message\n      success\n    }\n  }\n": types.UpdateAppointmentDocument,
     "\n  mutation CreateUser {\n  createUser {\n    message\n    success\n  }\n}\n": types.CreateUserDocument,
     "\n    mutation CreatePatient($input: CreatePatientInput!) {\n  createPatient(input: $input) {\n    message\n    success\n  }\n}\n": types.CreatePatientDocument,
+    "\n    fragment AppointmentInfo on Appointment {\n      time\n      status\n      patient {\n        name\n        age\n      }\n      doctor {\n        name\n        phone\n        image\n        address\n        speciality {\n          name\n        }\n      }\n    }\n": types.AppointmentInfoFragmentDoc,
     "\n  query GetUserAppointments {\n    getUserAppointments {\n      id\n      time\n      status\n      patient {\n        name\n        age\n      }\n      doctor {\n        name\n        phone\n        image\n        address\n        speciality {\n          name\n        }\n      }\n    }\n  }\n": types.GetUserAppointmentsDocument,
     "\n  query GetSpecialists($specialityId: String!) {\n    getSpecialists(specialityId: $specialityId) {\n    name\n    image\n    rating\n    experience\n    id\n    speciality {\n      name\n    }\n    email\n    address\n    phone\n  }\n  }\n": types.GetSpecialistsDocument,
     "\n  fragment DoctorInfo on Doctor{\n    name\n    image\n    rating\n    experience\n    id\n    speciality {\n      name\n    }\n    email\n    address\n    phone\n  }\n": types.DoctorInfoFragmentDoc,
@@ -58,6 +59,10 @@ export function gql(source: "\n  mutation CreateUser {\n  createUser {\n    mess
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n    mutation CreatePatient($input: CreatePatientInput!) {\n  createPatient(input: $input) {\n    message\n    success\n  }\n}\n"): (typeof documents)["\n    mutation CreatePatient($input: CreatePatientInput!) {\n  createPatient(input: $input) {\n    message\n    success\n  }\n}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    fragment AppointmentInfo on Appointment {\n      time\n      status\n      patient {\n        name\n        age\n      }\n      doctor {\n        name\n        phone\n        image\n        address\n        speciality {\n          name\n        }\n      }\n    }\n"): (typeof documents)["\n    fragment AppointmentInfo on Appointment {\n      time\n      status\n      patient {\n        name\n        age\n      }\n      doctor {\n        name\n        phone\n        image\n        address\n        speciality {\n          name\n        }\n      }\n    }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

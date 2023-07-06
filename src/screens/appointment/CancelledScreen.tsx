@@ -10,7 +10,7 @@ import {AppointmentStackScreenProps} from '../../navigation/types';
 
 const CancelledScreen = ({
   navigation,
-}: AppointmentStackScreenProps<'AppointmentTabs', 'Cancelled'>) => {
+}: AppointmentStackScreenProps<'AppointmentTabs'>) => {
   const {appointments, loading} = useAppointmentContext();
   const CancelledAppointments = useCallback(() => {
     return appointments.filter(app => app.status === 'CANCELLED');

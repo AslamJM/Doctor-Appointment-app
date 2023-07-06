@@ -94,14 +94,12 @@ const HospitalScreen = ({route}: HomeStackScreenProps<'Hospital'>) => {
       <HospitalPageCard
         name={hospital.name}
         address={hospital.address}
-        timing={hospital.openTime}
+        timing={hospital.openTime!}
       />
-      <Divider />
+
       <Box px={5}>
-        <SectionTitle>Address</SectionTitle>
-        <Paragraph>{hospital.address}</Paragraph>
         {renderComponent()}
-        <Flex direction="row" justifyContent="center" my={3}>
+        <Flex direction="row" justifyContent="center" my={3} bottom={1}>
           <Button
             mr={2}
             variant="outline"
@@ -130,6 +128,7 @@ export default HospitalScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   mapView: {
     height: 270,

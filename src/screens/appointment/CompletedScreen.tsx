@@ -10,7 +10,7 @@ import {AppointmentStackScreenProps} from '../../navigation/types';
 
 const CompletedScreen = ({
   navigation,
-}: AppointmentStackScreenProps<'AppointmentTabs', 'Completed'>) => {
+}: AppointmentStackScreenProps<'AppointmentTabs'>) => {
   const {appointments, loading} = useAppointmentContext();
   const CompletedAppointments = useCallback(() => {
     return appointments.filter(app => app.status === 'COMPLETED');
