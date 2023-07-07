@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   },
   experience: {
     ...Fonts.regular,
-    color: Colors.amber,
+    color: Colors.pink,
   },
   buttonText: {
     ...Fonts.bold,

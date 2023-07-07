@@ -36,7 +36,17 @@ const HomeStackNavigator = () => {
         name="AllSpecialities"
         component={AllSpecialitiesScreen}
       />
-      <HomeStack.Screen name="TimeSlot" component={TimeSlotScreen} />
+      <HomeStack.Screen
+        name="TimeSlot"
+        component={TimeSlotScreen}
+        options={{
+          headerShown: true,
+          title: 'Select Time Slot',
+          header(props) {
+            return <StackHeaderBar {...props} />;
+          },
+        }}
+      />
       <HomeStack.Screen
         name="Hospital"
         component={HospitalScreen}
@@ -49,7 +59,17 @@ const HomeStackNavigator = () => {
         }}
       />
       <HomeStack.Screen name="DoctorProfile" component={DoctorProfileScreen} />
-      <HomeStack.Screen name="Appointment" component={AppointmentScreen} />
+      <HomeStack.Screen
+        name="Appointment"
+        component={AppointmentScreen}
+        options={{
+          headerShown: true,
+          title: 'Create Appointment',
+          header(props) {
+            return <StackHeaderBar {...props} />;
+          },
+        }}
+      />
       <HomeStack.Screen name="PatientList" component={PatientListScreen} />
     </HomeStack.Navigator>
   );

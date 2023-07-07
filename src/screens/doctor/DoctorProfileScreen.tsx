@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
   },
   drImage: {
-    height: 130,
+    height: 110,
     aspectRatio: 1,
     borderRadius: 8,
   },

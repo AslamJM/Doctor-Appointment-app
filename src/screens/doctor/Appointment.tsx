@@ -1,17 +1,30 @@
-import {StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import SectionTitle from '../../components/text/SectionTitle';
-import {useApolloClient, useMutation} from '@apollo/client';
+import {useApolloClient, useMutation, useQuery} from '@apollo/client';
 import {HomeStackScreenProps} from '../../navigation/types';
-import {Avatar, Button, Center, HStack, Stack} from 'native-base';
+import {
+  Avatar,
+  Box,
+  Button,
+  Center,
+  Checkbox,
+  HStack,
+  Spinner,
+  Stack,
+  useDisclose,
+} from 'native-base';
 import Text from '../../components/text/Text';
 import Colors from '../../constants/Colors';
-import {useUser} from '@clerk/clerk-expo';
 import dayjs from 'dayjs';
 import {useAppContext} from '../../context/GlobalContext';
 import {DOCTOR_INFO} from '../../graphql/query/doctor';
 import {CREATE_APPOINTMENT} from '../../graphql/mutation/appointment';
-import {convertTimeToISOString} from '../../utils/date';
+import {GET_PATIENTS} from '../../graphql/query/patient';
+import {convertToISOString} from '../../utils/date';
+import ErrorComponent from '../../components/ErrorComponent';
+import Fonts, {sizes} from '../../constants/Fonts';
+import CreatePatientActionSheet from '../patient/CreatePatientActionSheet';
 
 const Appointment = ({
   navigation,
@@ -19,10 +32,14 @@ const Appointment = ({
 }: HomeStackScreenProps<'Appointment'>) => {
   const {doctorId} = route.params;
   const client = useApolloClient();
-  const {user} = useUser();
   const {selectedSlot} = useAppContext();
   const [loading, setLoading] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState('');
+
+  // states for createPatient
+  const {onOpen, onClose, isOpen} = useDisclose();
+
+  const {data, loading: patientsLoad, error} = useQuery(GET_PATIENTS);
 
   // appointment mutation
   const [createMutation] = useMutation(CREATE_APPOINTMENT, {
@@ -30,9 +47,10 @@ const Appointment = ({
       appointmentInput: {
         doctorId,
         patientId: selectedPatient,
-        time: convertTimeToISOString(selectedSlot),
+        time: convertToISOString(selectedSlot),
       },
     },
+    refetchQueries: ['GetUserAppointments'],
   });
 
   // get Doctor data from the cache
@@ -40,6 +58,74 @@ const Appointment = ({
     id: `Doctor:${doctorId}`,
     fragment: DOCTOR_INFO,
   })!;
+
+  // patients section
+
+  const renderPatientSection = () => {
+    if (patientsLoad) {
+      return (
+        <Center h="100">
+          <Spinner color={Colors.primary} />
+        </Center>
+      );
+    }
+    if (error) {
+      return <ErrorComponent error={error} />;
+    }
+    const patients = data?.getPatientsOfUser;
+    return (
+      <Box>
+        <FlatList
+          data={patients}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <HStack
+              justifyContent="space-between"
+              alignItems="center"
+              py="2"
+              bg="white"
+              rounded="md"
+              my="1"
+              px="3">
+              <Stack>
+                <Text h3 style={{color: 'black'}}>
+                  {item.name}
+                </Text>
+                <Text h4>{`${item.age} years old`}</Text>
+              </Stack>
+              <Checkbox
+                value={item.id}
+                onChange={checked => {
+                  if (checked) {
+                    setSelectedPatient(item.id);
+                  } else {
+                    setSelectedPatient('');
+                  }
+                }}
+                isDisabled={
+                  selectedPatient.length > 0 && selectedPatient !== item.id
+                }
+                aria-label="select patient"
+              />
+            </HStack>
+          )}
+        />
+        <Center w="full" py="2" mt="3">
+          <Button
+            variant="outline"
+            _text={{
+              ...Fonts.regular,
+              color: Colors.primary,
+              fontSize: sizes.body3,
+            }}
+            onPress={onOpen}
+            borderColor={Colors.primary}>
+            Create Patient
+          </Button>
+        </Center>
+      </Box>
+    );
+  };
 
   const createAppointment = async () => {
     setLoading(true);
@@ -66,17 +152,7 @@ const Appointment = ({
           <Text h4>{doctor?.speciality.name}</Text>
         </Stack>
       </HStack>
-      <SectionTitle>Patient</SectionTitle>
-      {/* patient list select */}
-      <HStack py="3" my="2" px="2" bg={Colors.white} rounded="md">
-        <Avatar width={50} height={50} source={{uri: user?.profileImageUrl}} />
-        <Stack ml="2">
-          <Text h3>{user?.fullName || 'user'}</Text>
-          <Text h4>
-            {user?.emailAddresses[0].emailAddress || 'email address'}
-          </Text>
-        </Stack>
-      </HStack>
+      {/* Appointment Details */}
       <SectionTitle>Appointment Details</SectionTitle>
       <HStack
         py="3"
@@ -94,16 +170,27 @@ const Appointment = ({
           <Text h4>{selectedSlot}</Text>
         </Stack>
       </HStack>
-      <Center position="absolute" bottom={2} w="100%">
+      <SectionTitle>Select Patient</SectionTitle>
+      {/* patient list select */}
+      {renderPatientSection()}
+
+      <Center position="absolute" bottom={2} w="100%" mb="4">
         <Button
+          isDisabled={selectedPatient.length === 0}
           bg={Colors.primary}
           isLoading={loading}
-          onPress={createAppointment}>
-          <Text h3 style={{color: Colors.white}}>
-            {loading ? 'Submitting...' : 'Confirm Appointment'}
-          </Text>
+          onPress={createAppointment}
+          _spinner={{color: Colors.white}}
+          isLoadingText="Creating"
+          _text={{
+            ...Fonts.regular,
+            color: 'white',
+            fontSize: sizes.body3,
+          }}>
+          Confirm Appointment
         </Button>
       </Center>
+      <CreatePatientActionSheet onClose={onClose} isOpen={isOpen} />
     </View>
   );
 };

@@ -39,10 +39,14 @@ const AppointmentCard = ({
       <HStack h="full" flexGrow={1} alignItems="center">
         <Circle
           style={[{...styles.circle, backgroundColor: getbgColor(status)}]}>
-          <Text style={styles.date}>{dayjs(time).format('DD MMM YYYY')}</Text>
+          <Text style={styles.date}>
+            {dayjs(new Date(time).toDateString()).format('DD MMM YYYY')}
+          </Text>
         </Circle>
         <Box style={styles.content}>
-          <Text style={styles.time}>{dayjs(time).format('HH:MM A')}</Text>
+          <Text style={styles.time}>
+            {dayjs(new Date(time)).format('hh:mm A')}
+          </Text>
           <Text style={styles.name}>{doctor}</Text>
           <Text style={styles.field}>{speciality}</Text>
         </Box>
@@ -59,6 +63,8 @@ const AppointmentCard = ({
 
 export default AppointmentCard;
 
+//dayjs(time).format('HH:MM A')
+
 const styles = StyleSheet.create({
   container: {
     height: 120,
@@ -70,6 +76,7 @@ const styles = StyleSheet.create({
   circle: {
     aspectRatio: 1,
     padding: 5,
+    width: 100,
   },
   date: {
     ...Fonts.bold,

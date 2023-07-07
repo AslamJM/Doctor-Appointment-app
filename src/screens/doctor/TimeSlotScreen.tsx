@@ -11,7 +11,7 @@ import {Doctor} from '../../__generated__/graphql';
 import ErrorComponent from '../../components/ErrorComponent';
 import {SlotsLoading} from '../../components/skeletons/Loading';
 import SlotSectionHeader from '../../components/doctor/SlotSectionHeader';
-import {Button, Center, ArrowForwardIcon, HStack} from 'native-base';
+import {Button, Center, ArrowForwardIcon, HStack, CloseIcon} from 'native-base';
 import Text from '../../components/text/Text';
 
 import {useAppContext} from '../../context/GlobalContext';
@@ -24,7 +24,7 @@ const TimeSlotScreen = ({
   const {doctorId} = route.params;
   const client = useApolloClient();
 
-  const {selectedSlot} = useAppContext();
+  const {selectedSlot, setSelectedSlot} = useAppContext();
 
   // get Doctor data from the cache
   const doctor = client.readFragment<Doctor>({
@@ -57,9 +57,9 @@ const TimeSlotScreen = ({
     if (loading) {
       return (
         <>
-          <SlotsLoading type="Morning" />
-          <SlotsLoading type="Evening" />
-          <SlotsLoading type="Night" />
+          <SlotsLoading type="Morning" key="Morning" />
+          <SlotsLoading type="Evening" key="Eorning" />
+          <SlotsLoading type="Night" key="Norning" />
         </>
       );
     }
@@ -142,21 +142,31 @@ const TimeSlotScreen = ({
         <Calender />
         {renderTimeSlots()}
       </ScrollView>
-      <Center
+      <HStack
         style={styles.next}
         display={selectedSlot ? 'block' : 'none'}
         py="2">
+        <Button
+          backgroundColor={Colors.red}
+          onPress={() => setSelectedSlot('')}>
+          <HStack alignItems="center">
+            <CloseIcon mx="1" color={Colors.white} />
+            <Text h3 style={{color: Colors.white}}>
+              Cancel
+            </Text>
+          </HStack>
+        </Button>
         <Button
           backgroundColor={Colors.primary}
           onPress={() => navigation.navigate('Appointment', {doctorId})}>
           <HStack alignItems="center">
             <Text h3 style={{color: Colors.white}}>
-              Make Appointment
+              Go
             </Text>
             <ArrowForwardIcon mx="1" color={Colors.white} />
           </HStack>
         </Button>
-      </Center>
+      </HStack>
     </>
   );
 };
@@ -173,5 +183,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     backgroundColor: 'white',
+    paddingHorizontal: 10,
+    justifyContent: 'space-between',
+    paddingVertical: 50,
   },
 });

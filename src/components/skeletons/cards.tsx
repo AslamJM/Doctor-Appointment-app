@@ -6,7 +6,7 @@ const SpecialitySkeleton = () => {
   return (
     <Center width={140} height={120} background={Colors.white} mx={2} p="2">
       <Skeleton h="50" w="50" />
-      <Skeleton px="4" my={2} h="10" />
+      <Skeleton px="4" my={2} h="4" />
     </Center>
   );
 };
@@ -22,7 +22,7 @@ const SpecialitySkeletonVertical = () => {
 
 const HospitalSkeleton = () => {
   return (
-    <Flex direction="row" h="140" my={2}>
+    <Flex direction="row" h="150" my={2}>
       <Skeleton flex={1} h="100%" />
       <Skeleton.Text flex={3} px="4" />
     </Flex>

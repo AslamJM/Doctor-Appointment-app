@@ -26,22 +26,20 @@ export const getTimeSlots = (startTime: string, endTime: string) => {
   return timeSlots;
 };
 
-export function convertTimeToISOString(timeString: string) {
-  const currentDate = dayjs();
-  const [hours, minutes] = timeString
-    .split(':')
-    .map(part => parseInt(part, 10));
+export function convertToISOString(timeString: string) {
+  const [time, period] = timeString.split(' ');
+  const [hours, minutes] = time.split(':').map(Number);
 
-  let hours24 = hours;
-  if (hours === 12) {
-    hours24 = 0;
-  }
-  if (timeString.endsWith('PM')) {
-    hours24 += 12;
-  }
+  let date = new Date();
+  date.setHours(
+    period === 'AM' || hours === 12 ? hours : hours + 12,
+    minutes,
+    0,
+    0,
+  );
 
-  const dateTime = currentDate.set('hours', hours24).set('minutes', minutes);
-  const isoString = dateTime.toISOString();
+  console.log(timeString, date);
 
+  const isoString = date.toISOString();
   return isoString;
 }

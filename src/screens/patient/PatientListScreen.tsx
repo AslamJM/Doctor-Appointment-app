@@ -35,7 +35,7 @@ import {CREATE_PATIENT} from '../../graphql/mutation/user';
 import {isClerkAPIResponseError} from '@clerk/clerk-expo';
 
 // hook for get the keyboard inset
-const useKeyboardBottomInset = () => {
+export const useKeyboardBottomInset = () => {
   const [bottom, setBottom] = React.useState(0);
   const subscriptions = React.useRef<any[]>([]);
 
