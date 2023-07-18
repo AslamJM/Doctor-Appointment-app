@@ -21,7 +21,6 @@ import {useAppContext} from '../../context/GlobalContext';
 import {DOCTOR_INFO} from '../../graphql/query/doctor';
 import {CREATE_APPOINTMENT} from '../../graphql/mutation/appointment';
 import {GET_PATIENTS} from '../../graphql/query/patient';
-import {convertToISOString} from '../../utils/date';
 import ErrorComponent from '../../components/ErrorComponent';
 import Fonts, {sizes} from '../../constants/Fonts';
 import CreatePatientActionSheet from '../patient/CreatePatientActionSheet';
@@ -33,7 +32,7 @@ const Appointment = ({
 }: HomeStackScreenProps<'Appointment'>) => {
   const {doctorId} = route.params;
   const client = useApolloClient();
-  const {selectedSlot, setSelectedSlot} = useAppContext();
+  const {selectedSlot, setSelectedSlot, selectedDate} = useAppContext();
   const [loading, setLoading] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState('');
 
@@ -48,7 +47,8 @@ const Appointment = ({
       appointmentInput: {
         doctorId,
         patientId: selectedPatient,
-        time: convertToISOString(selectedSlot),
+        time: selectedSlot,
+        date: selectedDate,
       },
     },
     refetchQueries: ['GetUserAppointments'],

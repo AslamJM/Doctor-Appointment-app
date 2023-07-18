@@ -35,6 +35,7 @@ const CompletedScreen = ({
             speciality={item.doctor.speciality.name}
             status="COMPLETED"
             time={item.time}
+            date={item.date}
             onPress={() =>
               navigation.navigate('AppointmentDetail', {
                 appointmentId: item.id,

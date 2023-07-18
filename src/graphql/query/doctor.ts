@@ -51,6 +51,24 @@ export const GET_DOCTOR_BY_ID = gql(`
   }
 `);
 
+export const SEARCH_DOCTORS = gql(`
+    query SearchDoctors($name: String!) {
+  searchDoctors(name: $name) {
+    name
+    image
+    rating
+    experience
+    id
+    speciality {
+      name
+    }
+    email
+    address
+    phone
+  }
+}
+`);
+
 // export const GET_DOCTOR_AVAILABILTY = gql(`
 //   query GetDoctorAvailablity($getDoctorId: ID!) {
 //     getDoctor(id: $getDoctorId) {

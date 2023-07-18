@@ -23,7 +23,9 @@ const SpecialitySkeletonVertical = () => {
 const HospitalSkeleton = () => {
   return (
     <Flex direction="row" h="150" my={2}>
-      <Skeleton flex={1} h="100%" />
+      <Center flex={1} h="100%">
+        <Skeleton width={110} height={110} />
+      </Center>
       <Skeleton.Text flex={3} px="4" />
     </Flex>
   );

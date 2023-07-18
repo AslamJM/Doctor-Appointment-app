@@ -35,6 +35,7 @@ const PendingScreen = ({
             speciality={item.doctor.speciality.name}
             status="PENDING"
             time={item.time}
+            date={item.date}
             onPress={() =>
               navigation.navigate('AppointmentDetail', {
                 appointmentId: item.id,

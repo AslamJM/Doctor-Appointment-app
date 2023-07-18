@@ -10,6 +10,7 @@ type Props = {
   doctor: string;
   speciality: string;
   time: string;
+  date: string;
   onPress: () => void;
 };
 
@@ -27,6 +28,7 @@ const getbgColor = (status: 'PENDING' | 'COMPLETED' | 'CANCELLED') => {
 const AppointmentCard = ({
   status,
   time,
+  date,
   doctor,
   speciality,
   onPress,
@@ -39,15 +41,11 @@ const AppointmentCard = ({
       <HStack h="full" flexGrow={1} alignItems="center">
         <Circle
           style={[{...styles.circle, backgroundColor: getbgColor(status)}]}>
-          <Text style={styles.date}>
-            {dayjs(new Date(time).toDateString()).format('DD MMM YYYY')}
-          </Text>
+          <Text style={styles.date}>{dayjs(date).format('DD MMM YYYY')}</Text>
         </Circle>
         <Box style={styles.content}>
-          <Text style={styles.time}>
-            {dayjs(new Date(time)).format('hh:mm A')}
-          </Text>
-          <Text style={styles.name}>{doctor}</Text>
+          <Text style={styles.time}>{time}</Text>
+          <Text style={styles.name}>Dr. {doctor}</Text>
           <Text style={styles.field}>{speciality}</Text>
         </Box>
       </HStack>

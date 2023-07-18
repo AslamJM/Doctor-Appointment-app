@@ -35,6 +35,7 @@ const CancelledScreen = ({
             speciality={item.doctor.speciality.name}
             status="CANCELLED"
             time={item.time}
+            date={item.date}
             onPress={() =>
               navigation.navigate('AppointmentDetail', {appointmentId: item.id})
             }

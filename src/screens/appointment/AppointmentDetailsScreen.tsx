@@ -116,7 +116,7 @@ const AppointmentDetailsScreen = ({
   return (
     <View style={styles.container}>
       <SectionTitle>Appointment</SectionTitle>
-      <AppointmentDetailCard time={appointment.time} />
+      <AppointmentDetailCard time={appointment.time} date={appointment.date} />
       <SectionTitle>Doctor Information</SectionTitle>
       <AppointmentDoctorInfo
         name={doctor.name}

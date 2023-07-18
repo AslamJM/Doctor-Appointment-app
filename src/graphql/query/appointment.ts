@@ -3,6 +3,7 @@ import {gql} from '../../__generated__';
 export const APPOINTMENT_INFO = gql(`
     fragment AppointmentInfo on Appointment {
       time
+      date
       status
       patient {
         name
@@ -25,6 +26,7 @@ export const GET_MY_APPOINTMENTS = gql(`
     getUserAppointments {
       id
       time
+      date
       status
       patient {
         name

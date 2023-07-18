@@ -5,8 +5,11 @@ import {View} from 'react-native';
 import React from 'react';
 import Colors from '../../constants/Colors';
 import dayjs from 'dayjs';
+import {useAppContext} from '../../context/GlobalContext';
 
 const Calender = () => {
+  const {setSelectedDate} = useAppContext();
+
   return (
     <View style={{marginVertical: 10}}>
       <View style={{paddingHorizontal: 10}}>
@@ -22,6 +25,7 @@ const Calender = () => {
             justifyContent: 'center',
             padding: 4,
           }}
+          onDateSelected={e => setSelectedDate(e.toDate().toDateString())}
           selectedDate={new Date(dayjs().toISOString())}
           dateNumberStyle={{color: 'black', fontSize: 15.0}}
           dateNameStyle={{color: 'black', fontSize: 14.0}}
