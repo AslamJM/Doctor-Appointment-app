@@ -4,7 +4,7 @@ import React from 'react';
 import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
 import {useAppContext} from '../../context/GlobalContext';
-import {getTimeSlots} from '../../utils/date';
+import {getTimeSlots, generateTimeSlots} from '../../utils/date';
 import MText from '../text/Text';
 
 interface SlotSectionProps {
@@ -15,7 +15,7 @@ interface SlotSectionProps {
 const SlotSection = ({startTime, endTime}: SlotSectionProps) => {
   const {selectedSlot, setSelectedSlot} = useAppContext();
 
-  if (startTime === 'no' || endTime === 'no') {
+  if (!startTime || startTime === 'no' || !endTime || endTime === 'no') {
     return (
       <Center py={2}>
         <MText h3>Doctor is not available</MText>
@@ -23,12 +23,14 @@ const SlotSection = ({startTime, endTime}: SlotSectionProps) => {
     );
   }
 
-  const timeSlots = getTimeSlots(startTime, endTime);
+  const timeSlots = generateTimeSlots(startTime, endTime);
 
   if (timeSlots.length === 0) {
     return (
       <Center py={2}>
-        <MText h3>Doctor is not available</MText>
+        <MText h4 style={{color: Colors.red}}>
+          Doctor is not available
+        </MText>
       </Center>
     );
   }

@@ -1,4 +1,4 @@
-import {StyleSheet, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView, Image} from 'react-native';
 import React from 'react';
 import TimeSlotCard from '../../components/cards/TimeSlotsCard';
 import SlotSection from '../../components/cards/SlotSection';
@@ -6,16 +6,26 @@ import Calender from '../../components/doctor/Calender';
 import {HomeStackScreenProps} from '../../navigation/types';
 
 import {useQuery, useApolloClient, gql} from '@apollo/client';
-import {GET_DOCTOR_AVAILABILTY} from '../../graphql/query/doctor';
+import {GET_DOCTOR_AVAILABILTY} from '../../graphql/query/availability';
 import {Doctor} from '../../__generated__/graphql';
 import ErrorComponent from '../../components/ErrorComponent';
 import {SlotsLoading} from '../../components/skeletons/Loading';
 import SlotSectionHeader from '../../components/doctor/SlotSectionHeader';
-import {Button, Center, ArrowForwardIcon, HStack, CloseIcon} from 'native-base';
+import {
+  Button,
+  Center,
+  ArrowForwardIcon,
+  HStack,
+  CloseIcon,
+  Spinner,
+  Box,
+} from 'native-base';
 import Text from '../../components/text/Text';
+import Icons from '../../constants/Icons';
 
 import {useAppContext} from '../../context/GlobalContext';
 import Colors from '../../constants/Colors';
+import dayjs from 'dayjs';
 
 const TimeSlotScreen = ({
   navigation,
@@ -44,24 +54,24 @@ const TimeSlotScreen = ({
   // fetch doctor TimeSlots
   const {data, loading, error} = useQuery(GET_DOCTOR_AVAILABILTY, {
     variables: {
-      getDoctorId: doctorId,
+      getDoctorAvailabilityId: doctorId,
+      date: dayjs().format('DD/MM/YYYY'),
     },
   });
 
   // render Doctors timeslots
 
   const renderTimeSlots = () => {
-    if (error) {
-      return <ErrorComponent error={error} />;
-    }
     if (loading) {
       return (
-        <>
-          <SlotsLoading type="Morning" key="Morning" />
-          <SlotsLoading type="Evening" key="Eorning" />
-          <SlotsLoading type="Night" key="Norning" />
-        </>
+        <Center height={300}>
+          <Spinner color={Colors.primary} />
+        </Center>
       );
+    }
+
+    if (error) {
+      return <ErrorComponent error={error} />;
     }
 
     const notAvailableMessage = () => (
@@ -72,30 +82,44 @@ const TimeSlotScreen = ({
       </Center>
     );
 
+    if (data && !data.getDoctorAvailability) {
+      return (
+        <Center height={400}>
+          <Image source={Icons.NotIcon} style={{height: 50, width: 50}} />
+          <Text h4>Doctor is not available today</Text>
+        </Center>
+      );
+    }
     const morningAvailability =
       data &&
-      data.getDoctor.availability &&
-      data.getDoctor.availability.morning.length > 0;
+      data.getDoctorAvailability &&
+      data.getDoctorAvailability.morning &&
+      data.getDoctorAvailability.morning.startTime &&
+      data.getDoctorAvailability.morning;
 
     const eveningAvailability =
       data &&
-      data.getDoctor.availability &&
-      data.getDoctor.availability.evening.length > 0;
+      data.getDoctorAvailability &&
+      data.getDoctorAvailability.evening &&
+      data.getDoctorAvailability.evening.startTime &&
+      data.getDoctorAvailability.evening;
 
     const nightAvailability =
       data &&
-      data.getDoctor.availability &&
-      data.getDoctor.availability.night.length > 0;
+      data.getDoctorAvailability &&
+      data.getDoctorAvailability.night &&
+      data.getDoctorAvailability.night.startTime &&
+      data.getDoctorAvailability.night;
 
     return (
-      <>
+      <Box>
         <SlotSectionHeader type="Morning" />
         {morningAvailability ? (
           <SlotSection
             startTime={
-              data?.getDoctor?.availability?.morning[0].startTime || 'no'
+              morningAvailability ? morningAvailability.startTime! : 'no'
             }
-            endTime={data?.getDoctor?.availability?.morning[0].endTime || 'no'}
+            endTime={morningAvailability ? morningAvailability.endTime! : 'no'}
           />
         ) : (
           notAvailableMessage()
@@ -106,9 +130,9 @@ const TimeSlotScreen = ({
         ) : (
           <SlotSection
             startTime={
-              data?.getDoctor?.availability?.evening[0].startTime || 'no'
+              eveningAvailability ? eveningAvailability.startTime! : 'no'
             }
-            endTime={data?.getDoctor?.availability?.evening[0].endTime || 'no'}
+            endTime={eveningAvailability ? eveningAvailability.endTime! : 'no'}
           />
         )}
         <SlotSectionHeader type="Night" />
@@ -116,13 +140,11 @@ const TimeSlotScreen = ({
           notAvailableMessage()
         ) : (
           <SlotSection
-            startTime={
-              data?.getDoctor?.availability?.night[0].startTime || 'no'
-            }
-            endTime={data?.getDoctor?.availability?.night[0].endTime || 'no'}
+            startTime={nightAvailability ? nightAvailability.startTime! : 'no'}
+            endTime={nightAvailability ? nightAvailability.endTime! : 'no'}
           />
         )}
-      </>
+      </Box>
     );
   };
 

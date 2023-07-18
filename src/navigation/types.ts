@@ -27,6 +27,7 @@ export type HomeStackParamList = {
     doctorId: string;
   };
   PatientList: undefined;
+  CreateAppointment: undefined;
 };
 
 export type HomeStackScreenProps<Screen extends keyof HomeStackParamList> =

@@ -6,7 +6,7 @@ import HospitalCard from '../../components/cards/HospitalCard';
 
 import {HomeStackScreenProps} from '../../navigation/types';
 import ChooseCity from '../../components/cards/ChooseCity';
-import {Button} from 'native-base';
+import {Button, Center, Image} from 'native-base';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Colors from '../../constants/Colors';
 import Fonts, {sizes} from '../../constants/Fonts';
@@ -20,6 +20,7 @@ import {
   SpecialtyLoading,
   HospitalLoading,
 } from '../../components/skeletons/Loading';
+import Icons from '../../constants/Icons';
 
 const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
   const {loading, data, error, refetch} = useQuery(GET_SPECIALITIES);
@@ -132,6 +133,26 @@ const HomeScreen = ({navigation}: HomeStackScreenProps<'Home'>) => {
   return (
     <View style={styles.container}>
       <ChooseCity />
+      <Center>
+        <Button
+          borderColor={Colors.primary}
+          py={0}
+          my="2"
+          variant="outline"
+          onPress={() => navigation.navigate('CreateAppointment')}
+          startIcon={
+            <Center>
+              <Image
+                source={Icons.AppointmentIcon}
+                width="35"
+                height="35"
+                alt="appointment"
+              />
+            </Center>
+          }>
+          <Text style={styles.btnText}>Make Appointment</Text>
+        </Button>
+      </Center>
       <View style={styles.specialityBox}>
         <SectionTitle>Find doctor by speciality</SectionTitle>
         {renderSpecialities()}
@@ -170,5 +191,9 @@ const styles = StyleSheet.create({
     ...Fonts.bold,
     color: Colors.primary,
     fontSize: sizes.body3,
+  },
+  btnText: {
+    ...Fonts.bold,
+    color: Colors.primary,
   },
 });

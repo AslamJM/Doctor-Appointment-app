@@ -66,11 +66,32 @@ const SlotsLoading = ({type}: SlotSectionProps) => {
   const iconGenerate = () => {
     switch (type) {
       case 'Morning':
-        return <FeatherIcon name="sunrise" color={Colors.primary} size={30} />;
+        return (
+          <FeatherIcon
+            name="sunrise"
+            color={Colors.primary}
+            size={30}
+            key="sunrise"
+          />
+        );
       case 'Evening':
-        return <FeatherIcon name="sun" color={Colors.primary} size={30} />;
+        return (
+          <FeatherIcon
+            name="sun"
+            color={Colors.primary}
+            size={30}
+            key="sun-load"
+          />
+        );
       case 'Night':
-        return <FeatherIcon name="sunset" color={Colors.primary} size={30} />;
+        return (
+          <FeatherIcon
+            name="sunset"
+            color={Colors.primary}
+            size={30}
+            key="sunsetload"
+          />
+        );
     }
   };
 

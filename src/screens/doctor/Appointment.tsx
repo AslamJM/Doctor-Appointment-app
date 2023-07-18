@@ -25,6 +25,7 @@ import {convertToISOString} from '../../utils/date';
 import ErrorComponent from '../../components/ErrorComponent';
 import Fonts, {sizes} from '../../constants/Fonts';
 import CreatePatientActionSheet from '../patient/CreatePatientActionSheet';
+import Icons from '../../constants/Icons';
 
 const Appointment = ({
   navigation,
@@ -32,7 +33,7 @@ const Appointment = ({
 }: HomeStackScreenProps<'Appointment'>) => {
   const {doctorId} = route.params;
   const client = useApolloClient();
-  const {selectedSlot} = useAppContext();
+  const {selectedSlot, setSelectedSlot} = useAppContext();
   const [loading, setLoading] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState('');
 
@@ -106,6 +107,7 @@ const Appointment = ({
                   selectedPatient.length > 0 && selectedPatient !== item.id
                 }
                 aria-label="select patient"
+                color={Colors.primary}
               />
             </HStack>
           )}
@@ -138,6 +140,7 @@ const Appointment = ({
       console.log(error);
     } finally {
       setLoading(false);
+      setSelectedSlot('');
     }
   };
 
@@ -146,7 +149,11 @@ const Appointment = ({
       <SectionTitle>Doctor Details</SectionTitle>
       {/* Doctor Details */}
       <HStack py="3" my="2" px="2" bg={Colors.white} rounded="md">
-        <Avatar width={50} height={50} source={{uri: doctor.image!}} />
+        <Avatar
+          width={50}
+          height={50}
+          source={doctor.image ? {uri: doctor.image} : Icons.DoctorProfile}
+        />
         <Stack ml="2">
           <Text h3>{doctor.name}</Text>
           <Text h4>{doctor?.speciality.name}</Text>
@@ -182,6 +189,8 @@ const Appointment = ({
           onPress={createAppointment}
           _spinner={{color: Colors.white}}
           isLoadingText="Creating"
+          width="250"
+          height="50"
           _text={{
             ...Fonts.regular,
             color: 'white',

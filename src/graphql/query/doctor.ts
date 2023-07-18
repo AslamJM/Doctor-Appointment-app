@@ -38,20 +38,6 @@ export const GET_DOCTOR_BY_ID = gql(`
   query GetDoctor($getDoctorId: ID!) {
     getDoctor(id: $getDoctorId) {
       address
-      availability {
-        evening {
-          endTime
-          startTime
-        }
-        morning {
-          endTime
-          startTime
-        }
-        night {
-          endTime
-          startTime
-        }
-      }
       description
       experience
       id
@@ -65,23 +51,23 @@ export const GET_DOCTOR_BY_ID = gql(`
   }
 `);
 
-export const GET_DOCTOR_AVAILABILTY = gql(`
-  query GetDoctorAvailablity($getDoctorId: ID!) {
-    getDoctor(id: $getDoctorId) {
-      availability {
-        evening {
-          endTime
-          startTime
-        }
-        morning {
-          endTime
-          startTime
-        }
-        night {
-          endTime
-          startTime
-        }
-      }
-    }
-  }
-`);
+// export const GET_DOCTOR_AVAILABILTY = gql(`
+//   query GetDoctorAvailablity($getDoctorId: ID!) {
+//     getDoctor(id: $getDoctorId) {
+//       availability {
+//         evening {
+//           endTime
+//           startTime
+//         }
+//         morning {
+//           endTime
+//           startTime
+//         }
+//         night {
+//           endTime
+//           startTime
+//         }
+//       }
+//     }
+//   }
+// `);

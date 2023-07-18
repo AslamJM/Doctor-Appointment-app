@@ -11,6 +11,7 @@ import DoctorProfileScreen from '../screens/doctor/DoctorProfileScreen';
 import AppointmentScreen from '../screens/doctor/Appointment';
 import PatientListScreen from '../screens/patient/PatientListScreen';
 import StackHeaderBar from '../components/StackHeaderBar';
+import CreateAppointmentScreen from '../screens/appointment/CreateAppointmentScreen';
 
 const HomeStack = createStackNavigator<HomeStackParamList>();
 
@@ -71,6 +72,17 @@ const HomeStackNavigator = () => {
         }}
       />
       <HomeStack.Screen name="PatientList" component={PatientListScreen} />
+      <HomeStack.Screen
+        name="CreateAppointment"
+        component={CreateAppointmentScreen}
+        options={{
+          headerShown: true,
+          title: 'Choose Specialist',
+          header(props) {
+            return <StackHeaderBar {...props} />;
+          },
+        }}
+      />
     </HomeStack.Navigator>
   );
 };
