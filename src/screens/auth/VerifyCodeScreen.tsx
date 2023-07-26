@@ -106,6 +106,7 @@ const VerifyCodeScreen = ({
             focusOutlineColor={Colors.primary}
             value={code}
             onChangeText={setCode}
+            keyboardType="numeric"
           />
 
           <FormControl.ErrorMessage

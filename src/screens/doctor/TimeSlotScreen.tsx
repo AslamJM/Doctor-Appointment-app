@@ -9,7 +9,6 @@ import {useQuery, useApolloClient, gql} from '@apollo/client';
 import {GET_DOCTOR_AVAILABILTY} from '../../graphql/query/availability';
 import {Doctor} from '../../__generated__/graphql';
 import ErrorComponent from '../../components/ErrorComponent';
-import {SlotsLoading} from '../../components/skeletons/Loading';
 import SlotSectionHeader from '../../components/doctor/SlotSectionHeader';
 import {
   Button,
@@ -19,6 +18,8 @@ import {
   CloseIcon,
   Spinner,
   Box,
+  Actionsheet,
+  useDisclose,
 } from 'native-base';
 import Text from '../../components/text/Text';
 import Icons from '../../constants/Icons';
@@ -35,6 +36,7 @@ const TimeSlotScreen = ({
   const client = useApolloClient();
 
   const {selectedSlot, setSelectedSlot} = useAppContext();
+  const {isOpen, onOpen, onClose} = useDisclose();
 
   // get Doctor data from the cache
   const doctor = client.readFragment<Doctor>({
@@ -164,31 +166,35 @@ const TimeSlotScreen = ({
         <Calender />
         {renderTimeSlots()}
       </ScrollView>
-      <HStack
-        style={styles.next}
-        display={selectedSlot ? 'block' : 'none'}
-        py="2">
-        <Button
-          backgroundColor={Colors.red}
-          onPress={() => setSelectedSlot('')}>
-          <HStack alignItems="center">
-            <CloseIcon mx="1" color={Colors.white} />
-            <Text h3 style={{color: Colors.white}}>
-              Cancel
-            </Text>
+      <Actionsheet isOpen={selectedSlot.length > 0} onClose={onClose}>
+        <Actionsheet.Content>
+          <HStack style={styles.next} py="2">
+            <Button
+              backgroundColor={Colors.red}
+              onPress={() => {
+                setSelectedSlot('');
+                onClose();
+              }}>
+              <HStack alignItems="center">
+                <CloseIcon mx="1" color={Colors.white} />
+                <Text h3 style={{color: Colors.white}}>
+                  Cancel
+                </Text>
+              </HStack>
+            </Button>
+            <Button
+              backgroundColor={Colors.primary}
+              onPress={() => navigation.navigate('Appointment', {doctorId})}>
+              <HStack alignItems="center">
+                <Text h3 style={{color: Colors.white}}>
+                  Go
+                </Text>
+                <ArrowForwardIcon mx="1" color={Colors.white} />
+              </HStack>
+            </Button>
           </HStack>
-        </Button>
-        <Button
-          backgroundColor={Colors.primary}
-          onPress={() => navigation.navigate('Appointment', {doctorId})}>
-          <HStack alignItems="center">
-            <Text h3 style={{color: Colors.white}}>
-              Go
-            </Text>
-            <ArrowForwardIcon mx="1" color={Colors.white} />
-          </HStack>
-        </Button>
-      </HStack>
+        </Actionsheet.Content>
+      </Actionsheet>
     </>
   );
 };
@@ -201,8 +207,6 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   next: {
-    position: 'absolute',
-    bottom: 0,
     width: '100%',
     backgroundColor: 'white',
     paddingHorizontal: 10,

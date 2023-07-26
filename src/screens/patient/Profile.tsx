@@ -95,7 +95,7 @@ const ProfileScreen = ({
         )}
         <Button variant="ghost">
           <Text h3 style={styles.editbtnText}>
-            Edit Profile
+            Edit
           </Text>
         </Button>
       </Flex>

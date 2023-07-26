@@ -4,8 +4,9 @@ import React from 'react';
 import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
 import {useAppContext} from '../../context/GlobalContext';
-import {getTimeSlots, generateTimeSlots} from '../../utils/date';
+import {generateTimeSlots, checkPassedTime} from '../../utils/date';
 import MText from '../text/Text';
+import dayjs from 'dayjs';
 
 interface SlotSectionProps {
   startTime: string;
@@ -13,7 +14,7 @@ interface SlotSectionProps {
 }
 
 const SlotSection = ({startTime, endTime}: SlotSectionProps) => {
-  const {selectedSlot, setSelectedSlot} = useAppContext();
+  const {selectedSlot, setSelectedSlot, selectedDate} = useAppContext();
 
   if (!startTime || startTime === 'no' || !endTime || endTime === 'no') {
     return (
@@ -41,6 +42,9 @@ const SlotSection = ({startTime, endTime}: SlotSectionProps) => {
         variant={selectedSlot === item ? 'solid' : 'outline'}
         backgroundColor={
           selectedSlot === item ? Colors.primary : Colors.transparent
+        }
+        isDisabled={
+          dayjs().format('DD/MM/YYYY') === selectedDate && checkPassedTime(item)
         }
         width={100}
         mx={3}

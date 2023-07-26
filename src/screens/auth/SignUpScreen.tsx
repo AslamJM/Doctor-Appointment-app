@@ -27,15 +27,15 @@ const SignUpScreen = ({navigation}: AuthStackScreenProps<'SignUp'>) => {
   const {isLoaded, signUp} = useSignUp();
 
   const signUpHandler = async () => {
-    setLoading(true);
     if (!isLoaded) {
       return;
     }
     try {
-      await signUp.create({
+      const res = await signUp.create({
         emailAddress: email,
         firstName: name,
       });
+
       await signUp.prepareEmailAddressVerification({strategy: 'email_code'});
       navigation.navigate('VerifyEmail', {type: 'SignUp'});
     } catch (error) {
@@ -68,10 +68,9 @@ const SignUpScreen = ({navigation}: AuthStackScreenProps<'SignUp'>) => {
             onChangeText={setName}
           />
 
-          <FormControl.ErrorMessage
-            leftIcon={
-              <WarningOutlineIcon size="xs" />
-            }></FormControl.ErrorMessage>
+          <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+            {error}
+          </FormControl.ErrorMessage>
         </Stack>
       </FormControl>
       <FormControl mt="2" isInvalid={!!error}>

@@ -59,7 +59,17 @@ const HomeStackNavigator = () => {
           },
         }}
       />
-      <HomeStack.Screen name="DoctorProfile" component={DoctorProfileScreen} />
+      <HomeStack.Screen
+        name="DoctorProfile"
+        component={DoctorProfileScreen}
+        options={{
+          headerShown: true,
+          title: 'Doctor Profile',
+          header(props) {
+            return <StackHeaderBar {...props} />;
+          },
+        }}
+      />
       <HomeStack.Screen
         name="Appointment"
         component={AppointmentScreen}

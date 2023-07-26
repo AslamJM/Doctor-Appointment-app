@@ -28,7 +28,7 @@ const TimeSlotCard = ({
         <Avatar source={image ? {uri: image} : Icons.DoctorImage} size="xl" />
       </Box>
       <Flex style={styles.content}>
-        <Text style={styles.name}>{name}</Text>
+        <Text style={styles.name}>Dr. {name}</Text>
         <Text style={styles.speciality}>{speciality}</Text>
         <Text style={styles.experience}>{experience} years of experience</Text>
       </Flex>

@@ -1,10 +1,15 @@
 import React from 'react';
-import {StyleProp, StyleSheet, Text as RNText, TextStyle} from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  Text as RNText,
+  TextStyle,
+  TextProps,
+} from 'react-native';
 import fonts, {sizes, lineHeights} from '../../constants/Fonts';
 
-interface Props {
+interface Props extends TextProps {
   style?: StyleProp<TextStyle>;
-  children: string;
   medium?: boolean;
   light?: boolean;
   bold?: boolean;

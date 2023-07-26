@@ -28,7 +28,10 @@ const Calender = () => {
           onDateSelected={e => setSelectedDate(e.toDate().toDateString())}
           selectedDate={new Date(dayjs().toISOString())}
           dateNumberStyle={{color: 'black', fontSize: 15.0}}
-          dateNameStyle={{color: 'black', fontSize: 14.0}}
+          dateNameStyle={{
+            color: 'black',
+            fontSize: 14.0,
+          }}
           highlightDateNameStyle={{color: 'white', fontSize: 14.0}}
           highlightDateNumberStyle={{color: 'white', fontSize: 15.0}}
           //   datesBlacklist={date => {

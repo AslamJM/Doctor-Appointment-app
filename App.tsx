@@ -1,6 +1,6 @@
 import React from 'react';
 import Providers from './src/components/Providers';
-
+import {LogBox} from 'react-native';
 import {
   SignedIn,
   SignedOut,
@@ -13,6 +13,7 @@ import AuthNavigator from './src/navigation/AuthStackNavigator';
 import SplashScreen from './src/screens/SplashScreen';
 
 const App = () => {
+  LogBox.ignoreAllLogs();
   return (
     <Providers>
       <ClerkLoading>

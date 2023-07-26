@@ -27,7 +27,7 @@ const initialState: AppState = {
   setSelectedSlot: () => {
     //
   },
-  selectedDate: dayjs().toISOString(),
+  selectedDate: dayjs().format('DD/MM/YYYY'),
   setSelectedDate: () => {},
 };
 

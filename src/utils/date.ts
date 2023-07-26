@@ -34,7 +34,6 @@ export function convertToISOString(timeString: string) {
   date.set('hour', hours);
   date.set('minute', minutes);
 
-
   return date.toISOString();
 }
 
@@ -60,3 +59,13 @@ export function generateTimeSlots(
 
   return slots;
 }
+
+export const checkPassedTime = (t: string) => {
+  const [time, suffix] = t.split(' ');
+  if (suffix === 'A.M.') {
+    return dayjs().get('hour') > Number(time.split(':')[0]);
+  }
+  if (suffix === 'P.M.') {
+    return dayjs().get('hour') > Number(12 + time.split(':')[0]);
+  }
+};

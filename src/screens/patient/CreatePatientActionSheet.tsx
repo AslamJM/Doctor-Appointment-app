@@ -1,21 +1,13 @@
 import React from 'react';
 
 import {StyleSheet} from 'react-native';
-import {
-  Actionsheet,
-  useKeyboardBottomInset,
-  useDisclose,
-  Box,
-  FormControl,
-  Stack,
-  Input,
-  Button,
-} from 'native-base';
+import {Actionsheet, Box, FormControl, Stack, Input, Button} from 'native-base';
 import Text from '../../components/text/Text';
 import Colors from '../../constants/Colors';
 import {useMutation} from '@apollo/client';
 import {CREATE_PATIENT} from '../../graphql/mutation/user';
 import Fonts, {sizes} from '../../constants/Fonts';
+import {useKeyboardBottomInset} from './PatientListScreen';
 
 type CreatePatientSheetProps = {
   isOpen: boolean;
@@ -84,6 +76,7 @@ const CreatePatientActionSheet = ({
                 style={styles.input}
                 value={age}
                 onChangeText={setAge}
+                keyboardType="numeric"
               />
             </Stack>
           </FormControl>

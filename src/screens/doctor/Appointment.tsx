@@ -108,6 +108,10 @@ const Appointment = ({
                 }
                 aria-label="select patient"
                 color={Colors.primary}
+                _checked={{
+                  bgColor: Colors.primary,
+                  borderColor: Colors.primary,
+                }}
               />
             </HStack>
           )}

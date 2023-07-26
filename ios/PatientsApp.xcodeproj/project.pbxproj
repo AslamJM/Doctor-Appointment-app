@@ -19,6 +19,12 @@
 		B77EEA7ADE064C07A2B642C8 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B2B735D8D822460CA01924EC /* Poppins-Medium.ttf */; };
 		5B4CF54377E04A82992C5040 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E80D133C8B94959B8377CE7 /* Poppins-Regular.ttf */; };
 		3D169ECA1D7B413A94DEC904 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40CB11B222BE4B04AEE656FE /* Poppins-SemiBold.ttf */; };
+		4F56A69532394FF182751637 /* appointment.png in Resources */ = {isa = PBXBuildFile; fileRef = BE2BDF0B8CF1400098D342ED /* appointment.png */; };
+		7494B6E00ACE477D8A6EBF64 /* welcome.png in Resources */ = {isa = PBXBuildFile; fileRef = A7EAA68DB41C40899B4CA5F9 /* welcome.png */; };
+		D27A5F37659540FC82EDA720 /* doctor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0BAEBFC041BB43519F2790E7 /* doctor.jpg */; };
+		135211010CFB4DAE81617B49 /* hospital.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E8C2872AA0424DA7BF8E6CAE /* hospital.jpg */; };
+		6EC1E2E87AD147A591112541 /* doc_profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3437E35276F14D6BAA067ACE /* doc_profile.png */; };
+		E338C99B9E1E4ABBB26BAEFD /* not_here.png in Resources */ = {isa = PBXBuildFile; fileRef = D0260ED0B41D4736B442B0F3 /* not_here.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +60,12 @@
 		B2B735D8D822460CA01924EC /* Poppins-Medium.ttf */ = {isa = PBXFileReference; name = "Poppins-Medium.ttf"; path = "../assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		7E80D133C8B94959B8377CE7 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; name = "Poppins-Regular.ttf"; path = "../assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		40CB11B222BE4B04AEE656FE /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; name = "Poppins-SemiBold.ttf"; path = "../assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		BE2BDF0B8CF1400098D342ED /* appointment.png */ = {isa = PBXFileReference; name = "appointment.png"; path = "../assets/icons/appointment.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A7EAA68DB41C40899B4CA5F9 /* welcome.png */ = {isa = PBXFileReference; name = "welcome.png"; path = "../assets/icons/welcome.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0BAEBFC041BB43519F2790E7 /* doctor.jpg */ = {isa = PBXFileReference; name = "doctor.jpg"; path = "../assets/images/doctor.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E8C2872AA0424DA7BF8E6CAE /* hospital.jpg */ = {isa = PBXFileReference; name = "hospital.jpg"; path = "../assets/images/hospital.jpg"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3437E35276F14D6BAA067ACE /* doc_profile.png */ = {isa = PBXFileReference; name = "doc_profile.png"; path = "../assets/icons/doc_profile.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D0260ED0B41D4736B442B0F3 /* not_here.png */ = {isa = PBXFileReference; name = "not_here.png"; path = "../assets/icons/not_here.png"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +179,12 @@
 				B2B735D8D822460CA01924EC /* Poppins-Medium.ttf */,
 				7E80D133C8B94959B8377CE7 /* Poppins-Regular.ttf */,
 				40CB11B222BE4B04AEE656FE /* Poppins-SemiBold.ttf */,
+				BE2BDF0B8CF1400098D342ED /* appointment.png */,
+				A7EAA68DB41C40899B4CA5F9 /* welcome.png */,
+				0BAEBFC041BB43519F2790E7 /* doctor.jpg */,
+				E8C2872AA0424DA7BF8E6CAE /* hospital.jpg */,
+				3437E35276F14D6BAA067ACE /* doc_profile.png */,
+				D0260ED0B41D4736B442B0F3 /* not_here.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -273,6 +291,12 @@
 				B77EEA7ADE064C07A2B642C8 /* Poppins-Medium.ttf in Resources */,
 				5B4CF54377E04A82992C5040 /* Poppins-Regular.ttf in Resources */,
 				3D169ECA1D7B413A94DEC904 /* Poppins-SemiBold.ttf in Resources */,
+				4F56A69532394FF182751637 /* appointment.png in Resources */,
+				7494B6E00ACE477D8A6EBF64 /* welcome.png in Resources */,
+				D27A5F37659540FC82EDA720 /* doctor.jpg in Resources */,
+				135211010CFB4DAE81617B49 /* hospital.jpg in Resources */,
+				6EC1E2E87AD147A591112541 /* doc_profile.png in Resources */,
+				E338C99B9E1E4ABBB26BAEFD /* not_here.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

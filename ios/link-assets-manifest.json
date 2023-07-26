@@ -20,6 +20,30 @@
     {
       "path": "assets/fonts/Poppins-SemiBold.ttf",
       "sha1": "e36bef7e6b45efff4b18780043f95611fc4246c9"
+    },
+    {
+      "path": "assets/icons/appointment.png",
+      "sha1": "a60ab0c5ae890d3000d8c069e2847b200f53f845"
+    },
+    {
+      "path": "assets/icons/doc_profile.png",
+      "sha1": "5b596509f6cfee06577d7f086e4190b27b687da8"
+    },
+    {
+      "path": "assets/icons/not_here.png",
+      "sha1": "d9c71a48a4d2f463d186c65dd215281d26236e86"
+    },
+    {
+      "path": "assets/icons/welcome.png",
+      "sha1": "27c6292d304daf546e09e3784c2703979032c357"
+    },
+    {
+      "path": "assets/images/doctor.jpg",
+      "sha1": "91d73a82243d69bd3faf3c066532e8b8a012ae73"
+    },
+    {
+      "path": "assets/images/hospital.jpg",
+      "sha1": "765ed0a78091e40ffa226a20cba2109e47c015dd"
     }
   ]
 }

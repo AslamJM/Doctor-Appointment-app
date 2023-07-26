@@ -36,7 +36,7 @@ const DoctorProfileScreen = ({
           <Image source={{uri: doctor!.image!}} style={styles.drImage} />
         </Box>
         <Box style={styles.drDetails}>
-          <Text h3>{doctor!.name}</Text>
+          <Text h3>Dr. {doctor!.name}</Text>
           <Text h4 style={styles.contactText}>
             {doctor!.phone}
           </Text>
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     padding: 10,
     backgroundColor: Colors.white,
+    borderRadius: 8,
   },
   drImage: {
     height: 110,
