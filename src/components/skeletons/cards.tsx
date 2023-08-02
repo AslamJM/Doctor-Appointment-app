@@ -26,7 +26,9 @@ const HospitalSkeleton = () => {
       <Center flex={1} h="100%">
         <Skeleton width={110} height={110} />
       </Center>
-      <Skeleton.Text flex={3} px="4" />
+      <Center flex={2} h="100%">
+        <Skeleton.Text />
+      </Center>
     </Flex>
   );
 };
